@@ -1,4 +1,4 @@
-package list
+package ui.news.list
 
 import domain.HomeRepository
 import com.arkivanov.decompose.ComponentContext

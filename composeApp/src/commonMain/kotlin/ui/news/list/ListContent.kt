@@ -1,4 +1,4 @@
-package list
+package ui.news.list
 
 import AppContent
 import androidx.compose.runtime.Composable

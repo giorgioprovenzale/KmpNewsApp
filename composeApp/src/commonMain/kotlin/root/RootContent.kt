@@ -16,7 +16,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,8 +23,8 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
-import detail.DetailContent
-import list.ListContent
+import ui.news.detail.DetailContent
+import ui.news.list.ListContent
 import list2.ListContent2
 
 @Composable
@@ -64,16 +63,16 @@ fun RootContent(
                 }
             ) {
 
-                val stack = if (selectedTab.value == "home") component.tab1Stack else component.tab2Stack
+                val stack = if (selectedTab.value == "home") component.homeTabStack else component.sourcesTabStack
                 Children(
                     stack = stack,
                     modifier = modifier,
                     animation = stackAnimation(fade())
                 ) {
                     when (val child = it.instance) {
-                        is RootComponent.Child.ListChild -> ListContent(child.component)
-                        is RootComponent.Child.ListChild2 -> ListContent2(child.component)
-                        is RootComponent.Child.DetailChild -> DetailContent(child.component)
+                        is Child.NewsList -> ListContent(child.component)
+                        is Child.SourcesList -> ListContent2(child.component)
+                        is Child.NewsDetails -> DetailContent(child.component)
                     }
                 }
             }
