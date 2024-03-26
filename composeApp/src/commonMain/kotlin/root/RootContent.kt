@@ -24,7 +24,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import ui.news.detail.DetailContent
-import ui.news.list.ListContent
+import ui.news.list.NewsListContent
 import list2.ListContent2
 
 @Composable
@@ -70,7 +70,7 @@ fun RootContent(
                     animation = stackAnimation(fade())
                 ) {
                     when (val child = it.instance) {
-                        is Child.NewsList -> ListContent(child.component)
+                        is Child.NewsList -> NewsListContent(child.component)
                         is Child.SourcesList -> ListContent2(child.component)
                         is Child.NewsDetails -> DetailContent(child.component)
                     }

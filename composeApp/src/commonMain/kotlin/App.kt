@@ -34,11 +34,11 @@ import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
 import data.Product
 import kotlinx.coroutines.launch
-import ui.news.list.ListComponent
+import ui.news.list.NewsListState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppContent(products: State<ListComponent.Model>, onItemClicked: (Product) -> Unit) {
+fun AppContent(products: State<NewsListState>, onItemClicked: (Product) -> Unit) {
 
     BoxWithConstraints {
         val scope = this

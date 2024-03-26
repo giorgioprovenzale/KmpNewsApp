@@ -8,25 +8,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-interface DetailComponent {
-    val model: Value<Model>
-
-    fun onBackPressed()
-
-    data class Model(
-        val item: Product
-    )
-}
-
-class DefaultDetailComponent(
+class NewsDetailsComponent(
     private val componentContext: ComponentContext,
     private val item: Product,
     private val onBack: () -> Unit,
-) : DetailComponent, ComponentContext by componentContext {
+) : ComponentContext by componentContext {
 
-    private val _model = MutableValue(DetailComponent.Model(item = item))
-    override val model: Value<DetailComponent.Model> = _model
-    override fun onBackPressed() {
+    private val _state = MutableValue(NewsDetailsState(item = item))
+    val state: Value<NewsDetailsState> = _state
+    fun onBackPressed() {
         onBack()
     }
 

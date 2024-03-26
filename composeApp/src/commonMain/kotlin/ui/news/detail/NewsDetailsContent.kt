@@ -25,10 +25,10 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailContent(
-    component: DetailComponent
+    component: NewsDetailsComponent
 ) {
 
-    val product = component.model.subscribeAsState()
+    val product = component.state.subscribeAsState()
 
     Scaffold(
         modifier = Modifier,

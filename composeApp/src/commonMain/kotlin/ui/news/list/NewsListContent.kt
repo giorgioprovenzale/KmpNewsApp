@@ -4,12 +4,11 @@ import AppContent
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
-
 @Composable
-fun ListContent(
-    component: ListComponent
+fun NewsListContent(
+    component: NewsListComponent
 ) {
-    val products = component.model.subscribeAsState()
+    val products = component.state.subscribeAsState()
 
     AppContent(products) {
         component.onItemClicked(it)
