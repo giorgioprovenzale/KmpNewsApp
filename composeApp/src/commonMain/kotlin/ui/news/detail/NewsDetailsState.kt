@@ -1,5 +1,5 @@
 package ui.news.detail
 
-import data.Product
+import source.data.Product
 
 data class NewsDetailsState(val item: Product)

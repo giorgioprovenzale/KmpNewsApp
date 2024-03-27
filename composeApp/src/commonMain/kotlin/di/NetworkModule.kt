@@ -1,6 +1,7 @@
 package di
 
 import com.jpmobilelab.kmp.newsapp.BuildKonfig
+import domain.interactors.GetHeadlinesArticlesInteractor
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -9,6 +10,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
+import source.ApiService
 
 fun networkModule() = module {
     single {
@@ -31,5 +33,16 @@ fun networkModule() = module {
                 level = LogLevel.ALL
             }
         }
+    }
+
+    single {
+        ApiService(
+            httpClient = get()
+        )
+    }
+    single {
+        GetHeadlinesArticlesInteractor(
+            apiService = get()
+        )
     }
 }

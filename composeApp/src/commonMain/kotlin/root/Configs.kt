@@ -1,6 +1,6 @@
 package root
 
-import data.Product
+import source.data.Product
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,5 +1,5 @@
 package ui.news.list
 
-import data.Product
+import source.data.Product
 
 data class NewsListState(val items: List<Product>)

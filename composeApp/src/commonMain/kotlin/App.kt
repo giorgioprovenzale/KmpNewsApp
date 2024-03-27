@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
-import data.Product
+import source.data.Product
 import kotlinx.coroutines.launch
 import ui.news.list.NewsListState
 
