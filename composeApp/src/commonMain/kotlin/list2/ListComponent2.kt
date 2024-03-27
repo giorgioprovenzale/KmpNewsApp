@@ -3,8 +3,6 @@ package list2
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
-import source.data.Product
-import domain.repositories.HomeRepository
 
 interface ListComponent2 {
     val model: Value<Model>

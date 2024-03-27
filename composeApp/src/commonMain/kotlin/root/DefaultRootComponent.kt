@@ -5,9 +5,8 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import ui.headlines.detail.NewsDetailsComponent
+import ui.headlines.detail.ArticleDetailsComponent
 import domain.DomainComponent
 import ui.headlines.list.HeadlinesListComponent
 import list2.DefaultListComponent2
@@ -49,7 +48,7 @@ class DefaultRootComponent(
             )
 
             is HomeTabConfigs.NewsDetailsConfig -> Child.NewsDetails(
-                NewsDetailsComponent(componentContext, config.item) {
+                ArticleDetailsComponent(componentContext, config.item) {
                     onBackClicked()
                 }
             )
