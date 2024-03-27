@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.seiko.imageloader.rememberImagePainter
 import domain.models.Article
+import ui.shared.ArticleItem
 
 @Composable
 fun HeadlinesContent(
@@ -52,45 +53,6 @@ fun ArticlesList(articles: List<Article>, onItemClicked: (Article) -> Unit) {
                 article = article,
                 onItemClicked = onItemClicked
             )
-        }
-    }
-}
-
-@Composable
-fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
-    Card(
-        shape = RoundedCornerShape(15.dp),
-        modifier = Modifier.padding(8.dp).fillMaxWidth().clickable {
-            onItemClicked(article)
-        },
-        elevation = 2.dp
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            article.urlToImage?.let {
-                val painter = rememberImagePainter(url = it)
-                Image(
-                    painter,
-                    modifier = Modifier.fillMaxWidth().height(200.dp),
-                    contentDescription = article.title,
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    article.title.orEmpty(),
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.h6,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(all = 16.dp)
-                )
-            }
         }
     }
 }

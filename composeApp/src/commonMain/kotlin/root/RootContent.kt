@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +46,16 @@ fun RootContent(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             Scaffold(
-                topBar = { TopAppBar(title = { Text(text = selectedTab.value) }) },
+                topBar = {
+                    TopAppBar(
+                        title = { Text(text = selectedTab.value) },
+                        navigationIcon = {
+                            IconButton(
+                                onClick = { component.onBackClicked() },
+                                content = { Icon(Icons.Default.ArrowBack, contentDescription = "back") })
+                        }
+                    )
+                },
                 bottomBar = {
                     BottomNavigation(
 

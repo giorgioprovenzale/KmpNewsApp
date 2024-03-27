@@ -5,11 +5,12 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import ui.headlines.detail.ArticleDetailsComponent
 import domain.DomainComponent
-import ui.headlines.list.HeadlinesListComponent
 import list2.DefaultListComponent2
+import ui.headlines.detail.ArticleDetailsComponent
+import ui.headlines.list.HeadlinesListComponent
 
 class DefaultRootComponent(
     private val componentContext: ComponentContext,
@@ -23,7 +24,7 @@ class DefaultRootComponent(
         childStack(
             source = homeTabNavigation,
             serializer = HomeTabConfigs.serializer(),
-            initialConfiguration = HomeTabConfigs.NewsListConfig,
+            initialConfiguration = HomeTabConfigs.HeadlinesListConfig,
             handleBackButton = true,
             childFactory = ::homeTabChildFactory,
             key = "home"
@@ -41,15 +42,15 @@ class DefaultRootComponent(
 
     private fun homeTabChildFactory(config: HomeTabConfigs, componentContext: ComponentContext): Child {
         return when (config) {
-            is HomeTabConfigs.NewsListConfig -> Child.HeadlinesList(
+            is HomeTabConfigs.HeadlinesListConfig -> Child.HeadlinesList(
                 HeadlinesListComponent(componentContext, domainComponent.articlesRepository) { item ->
-                   // open details screen
+                    homeTabNavigation.push(HomeTabConfigs.ArticleDetailsConfig(item))
                 }
             )
 
-            is HomeTabConfigs.NewsDetailsConfig -> Child.NewsDetails(
+            is HomeTabConfigs.ArticleDetailsConfig -> Child.NewsDetails(
                 ArticleDetailsComponent(componentContext, config.item) {
-                    onBackClicked()
+                    homeTabNavigation.pop()
                 }
             )
         }
@@ -58,9 +59,7 @@ class DefaultRootComponent(
     private fun sourcesTabChildFactory(config: SourcesTabConfigs, componentContext: ComponentContext): Child {
         return when (config) {
             is SourcesTabConfigs.SourcesListConfig -> Child.SourcesList(
-                DefaultListComponent2(componentContext, domainComponent.homeRepository) { item ->
-
-                }
+                DefaultListComponent2(componentContext)
             )
         }
     }

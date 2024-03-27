@@ -1,15 +1,16 @@
 package root
 
+import domain.models.Article
 import kotlinx.serialization.Serializable
 
 @Serializable
 sealed interface HomeTabConfigs {
 
     @Serializable
-    data object NewsListConfig : HomeTabConfigs
+    data object HeadlinesListConfig : HomeTabConfigs
 
     @Serializable
-    data class NewsDetailsConfig(val item: Product) : HomeTabConfigs
+    data class ArticleDetailsConfig(val item: Article) : HomeTabConfigs
 }
 
 @Serializable
