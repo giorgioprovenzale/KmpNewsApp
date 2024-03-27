@@ -1,10 +1,22 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.konan.properties.Properties
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.15.1")
+    }
+}
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
-
+    id("com.codingfeline.buildkonfig") version "+"
     kotlin("plugin.serialization") version "1.9.21" //decompose step2
 }
 
@@ -57,6 +69,7 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.logging)
 
             api(libs.image.loader)
 
@@ -81,6 +94,29 @@ kotlin {
             api("com.arkivanov.essenty:lifecycle:1.3.0")
 
         }
+    }
+}
+
+buildkonfig {
+    packageName = "com.jpmobilelab.kmp.newsapp"
+    // objectName = "YourAwesomeConfig"
+    // exposeObjectWithName = "YourAwesomePublicConfig"
+
+    val props = Properties()
+
+    try {
+        props.load(file("secrets.properties").inputStream())
+    } catch (e: Exception) {
+        // keys are private and can not be comitted to git
+    }
+
+    defaultConfigs {
+
+        buildConfigField(
+            Type.STRING,
+            "API_BASE_HOST",
+            props["api_base_host"]?.toString()
+        )
     }
 }
 
@@ -117,3 +153,7 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
+
+
+
+

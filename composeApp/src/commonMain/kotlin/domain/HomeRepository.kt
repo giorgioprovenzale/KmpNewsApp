@@ -1,6 +1,5 @@
 package domain
 
-import apiClient.httpClient
 import data.Product
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -12,7 +11,7 @@ class HomeRepository(
 ) {
 
     suspend fun getProductsApi(): List<Product> {
-        val response = httpClient.get("https://fakestoreapi.com/products")
+        val response = httpClient.get("/products")
         return response.body()
     }
 
