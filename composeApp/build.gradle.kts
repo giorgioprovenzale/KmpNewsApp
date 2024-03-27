@@ -114,8 +114,8 @@ buildkonfig {
 
         buildConfigField(
             Type.STRING,
-            "API_BASE_HOST",
-            props["api_base_host"]?.toString()
+            "API_KEY",
+            props["API_KEY"]?.toString()
         )
     }
 }
