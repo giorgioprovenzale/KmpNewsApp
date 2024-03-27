@@ -7,11 +7,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ArticleResponse(
     @SerialName("author")
-    val author: String,
+    val author: String?,
     @SerialName("content")
-    val content: String,
+    val content: String?,
     @SerialName("description")
-    val description: String,
+    val description: String?,
     @SerialName("publishedAt")
     val publishedAt: String,
     @SerialName("source")
@@ -21,7 +21,7 @@ data class ArticleResponse(
     @SerialName("url")
     val url: String,
     @SerialName("urlToImage")
-    val urlToImage: String
+    val urlToImage: String?
 )
 
 fun ArticleResponse.toDomain() = Article(

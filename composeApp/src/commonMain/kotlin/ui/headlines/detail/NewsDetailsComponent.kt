@@ -1,4 +1,4 @@
-package ui.news.detail
+package ui.headlines.detail
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue

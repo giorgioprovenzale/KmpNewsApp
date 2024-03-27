@@ -20,12 +20,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
-import ui.news.detail.DetailContent
-import ui.news.list.NewsListContent
 import list2.ListContent2
+import ui.headlines.detail.DetailContent
+import ui.headlines.list.HeadlinesContent
 
 @Composable
 fun RootContent(
@@ -62,17 +63,21 @@ fun RootContent(
                     }
                 }
             ) {
-
                 val stack = if (selectedTab.value == "home") component.homeTabStack else component.sourcesTabStack
-                Children(
-                    stack = stack,
-                    modifier = modifier,
-                    animation = stackAnimation(fade())
+
+                Box(
+                    modifier = Modifier.fillMaxSize().background(Color.LightGray)
                 ) {
-                    when (val child = it.instance) {
-                        is Child.NewsList -> NewsListContent(child.component)
-                        is Child.SourcesList -> ListContent2(child.component)
-                        is Child.NewsDetails -> DetailContent(child.component)
+                    Children(
+                        stack = stack,
+                        modifier = modifier,
+                        animation = stackAnimation(fade())
+                    ) {
+                        when (val child = it.instance) {
+                            is Child.HeadlinesList -> HeadlinesContent(child.component)
+                            is Child.SourcesList -> ListContent2(child.component)
+                            is Child.NewsDetails -> DetailContent(child.component)
+                        }
                     }
                 }
             }

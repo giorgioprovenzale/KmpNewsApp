@@ -7,5 +7,7 @@ class GetHeadlinesArticlesInteractor(
     private val apiService: ApiService
 ) {
 
-    suspend operator fun invoke(): List<ArticleResponse> = apiService.getHeadlines().articles
+    suspend operator fun invoke(): List<ArticleResponse> = apiService.getHeadlines().articles.filterNot {
+        it.urlToImage.isNullOrEmpty()
+    }
 }

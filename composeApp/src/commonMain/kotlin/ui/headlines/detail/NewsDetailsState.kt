@@ -1,4 +1,4 @@
-package ui.news.detail
+package ui.headlines.detail
 
 import source.data.Product
 

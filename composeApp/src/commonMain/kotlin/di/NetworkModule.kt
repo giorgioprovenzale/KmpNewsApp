@@ -18,14 +18,17 @@ fun networkModule() = module {
             install(DefaultRequest) {
                 url {
                     protocol = URLProtocol.HTTPS
-                    host = BuildKonfig.API_BASE_HOST
-                    parameters.append("limit", "5")
+                    host = "newsapi.org"
+                    path("v2/")
+                    parameters.append("apiKey", BuildKonfig.API_KEY)
+                    parameters.append("country", "us")
                 }
             }
             install(ContentNegotiation) {
                 json(Json {
                     prettyPrint = true
                     ignoreUnknownKeys = true
+                    coerceInputValues = true
                 })
             }
             install(Logging) {

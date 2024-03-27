@@ -1,4 +1,4 @@
-package ui.news.detail
+package ui.headlines.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

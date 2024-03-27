@@ -7,9 +7,9 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import ui.news.detail.NewsDetailsComponent
+import ui.headlines.detail.NewsDetailsComponent
 import domain.DomainComponent
-import ui.news.list.NewsListComponent
+import ui.headlines.list.HeadlinesListComponent
 import list2.DefaultListComponent2
 
 class DefaultRootComponent(
@@ -42,10 +42,9 @@ class DefaultRootComponent(
 
     private fun homeTabChildFactory(config: HomeTabConfigs, componentContext: ComponentContext): Child {
         return when (config) {
-            is HomeTabConfigs.NewsListConfig -> Child.NewsList(
-                NewsListComponent(componentContext, domainComponent.homeRepository) { item ->
-                    homeTabNavigation.push(HomeTabConfigs.NewsDetailsConfig(item))
-                    //it will change the content to Detail
+            is HomeTabConfigs.NewsListConfig -> Child.HeadlinesList(
+                HeadlinesListComponent(componentContext, domainComponent.articlesRepository) { item ->
+                   // open details screen
                 }
             )
 

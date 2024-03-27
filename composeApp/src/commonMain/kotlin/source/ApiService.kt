@@ -7,5 +7,5 @@ import source.data.NewsResponse
 
 class ApiService constructor(private val httpClient: HttpClient) {
 
-    suspend fun getHeadlines(): NewsResponse = httpClient.get("/products").body<NewsResponse>()
+    suspend fun getHeadlines(): NewsResponse = httpClient.get("top-headlines").body<NewsResponse>()
 }
