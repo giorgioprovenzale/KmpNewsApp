@@ -19,14 +19,12 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
-import io.github.aakira.napier.Napier
 import list2.ListContent2
 import ui.headlines.detail.DetailContent
 import ui.headlines.list.HeadlinesContent
@@ -36,8 +34,7 @@ fun RootContent(
     component: RootComponent,
     modifier: Modifier = Modifier
 ) {
-
-    val selectedTab = remember { mutableStateOf("home") }
+    val state = component.state.collectAsState()
 
     MaterialTheme {
         Box(
@@ -49,12 +46,14 @@ fun RootContent(
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { Text(text = selectedTab.value) },
-                        navigationIcon = {
-                            IconButton(
-                                onClick = { component.onBackClicked() },
-                                content = { Icon(Icons.Default.ArrowBack, contentDescription = "back") })
-                        }
+                        title = { Text(text = state.value.selectedTab) },
+                        navigationIcon = if (state.value.showBack) {
+                            {
+                                IconButton(
+                                    onClick = { component.onBackClicked() },
+                                    content = { Icon(Icons.Default.ArrowBack, contentDescription = "back") })
+                            }
+                        } else null
                     )
                 },
                 bottomBar = {
@@ -63,32 +62,31 @@ fun RootContent(
                     ) {
                         BottomNavigationItem(
                             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                            onClick = { selectedTab.value = "home" },
-                            selected = selectedTab.value == "home"
+                            onClick = { component.onTabChange("home") },
+                            selected = state.value.selectedTab == "home"
 
                         )
                         BottomNavigationItem(
-                            icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Profile") },
-                            onClick = { selectedTab.value = "profile" },
-                            selected = selectedTab.value == "profile"
+                            icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Source") },
+                            onClick = { component.onTabChange("source") },
+                            selected = state.value.selectedTab == "source"
                         )
                     }
                 }
             ) {
-                val stack = if (selectedTab.value == "home") component.homeTabStack else component.sourcesTabStack
 
                 Box(
                     modifier = Modifier.fillMaxSize().background(Color.LightGray)
                 ) {
                     Children(
-                        stack = stack,
+                        stack = state.value.stack,
                         modifier = modifier,
                         animation = stackAnimation(fade())
                     ) {
                         when (val child = it.instance) {
-                            is Child.HeadlinesList -> HeadlinesContent(child.component)
-                            is Child.SourcesList -> ListContent2(child.component)
-                            is Child.NewsDetails -> DetailContent(child.component)
+                            is Child.HomeChild.HeadlinesList -> HeadlinesContent(child.component)
+                            is Child.HomeChild.NewsDetails -> DetailContent(child.component)
+                            is Child.SourcesChild.SourcesList -> ListContent2(child.component)
                         }
                     }
                 }
