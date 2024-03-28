@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
+import io.github.aakira.napier.Napier
 import list2.ListContent2
 import ui.headlines.detail.DetailContent
 import ui.headlines.list.HeadlinesContent

@@ -7,6 +7,8 @@ import com.seiko.imageloader.ImageLoader
 import com.seiko.imageloader.LocalImageLoader
 import com.seiko.imageloader.component.setupDefaultComponents
 import com.seiko.imageloader.defaultImageResultMemoryCache
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import okio.Path.Companion.toPath
 import platform.Foundation.NSCachesDirectory
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
@@ -15,6 +17,8 @@ import root.RootComponent
 import root.RootContent
 
 fun MainViewController(rootComponent: RootComponent) = ComposeUIViewController {
+    Napier.base(DebugAntilog())
+
     CompositionLocalProvider(
         LocalImageLoader provides remember { generateImageLoader() },
     ) {

@@ -79,6 +79,8 @@ kotlin {
 
             //koin step1
             implementation("io.insert-koin:koin-core:3.5.3")
+
+            implementation("io.github.aakira:napier:2.7.1")
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
