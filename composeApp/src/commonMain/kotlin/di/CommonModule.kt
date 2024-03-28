@@ -3,7 +3,6 @@ package di
 import domain.DomainComponent
 import domain.repositories.ArticlesRepository
 import org.koin.dsl.module
-import root.DefaultRootComponent
 import root.RootComponent
 
 fun commonModule() = networkModule() + module {
@@ -19,7 +18,7 @@ fun commonModule() = networkModule() + module {
     }
 
     single<RootComponent> {
-        DefaultRootComponent(
+        RootComponent(
             componentContext = get(),
             domainComponent = get()
         )
