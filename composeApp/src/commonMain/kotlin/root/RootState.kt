@@ -5,6 +5,5 @@ import com.arkivanov.decompose.value.Value
 
 data class RootState(
     val selectedTab: String,
-    val stack: Value<ChildStack<*, Child>>,
-    val showBack: Boolean
+    val showBack: Boolean = false
 )

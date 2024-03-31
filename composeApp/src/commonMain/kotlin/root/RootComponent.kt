@@ -3,17 +3,20 @@ package root
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.popWhile
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import domain.DomainComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import list2.DefaultListComponent2
 import ui.headlines.detail.ArticleDetailsComponent
-import ui.headlines.list.HeadlinesListComponent
+import ui.tabs.categories.CategoriesComponent
+import ui.tabs.headlines.HeadlinesComponent
+import ui.tabs.sources.SourcesComponent
 
 class RootComponent(
     private val componentContext: ComponentContext,
@@ -22,6 +25,17 @@ class RootComponent(
 
     private val homeTabNavigation = StackNavigation<HomeTabConfigs>()
     private val sourcesTabNavigation = StackNavigation<SourcesTabConfigs>()
+
+    private val tabsNavigation = StackNavigation<TabsConfigs>()
+
+    val tabsStack: Value<ChildStack<TabsConfigs, Child.TabsChild>> =
+        childStack(
+            source = tabsNavigation,
+            serializer = TabsConfigs.serializer(),
+            initialConfiguration = TabsConfigs.HeadlinesConfig,
+            childFactory = ::tabsChildFactory,
+            key = "tabs"
+        )
 
     private val homeTabStack: Value<ChildStack<HomeTabConfigs, Child.HomeChild>> =
         childStack(
@@ -45,27 +59,47 @@ class RootComponent(
     private val initialState: RootState
         get() = RootState(
             selectedTab = "home",
-            stack = homeTabStack,
-            showBack = false
         )
 
     private val _state = MutableStateFlow<RootState>(initialState)
     val state: StateFlow<RootState> = _state
 
     init {
-        homeTabStack.observe { stack ->
+        tabsStack.observe { stack ->
             _state.update {
                 it.copy(
-                    showBack = stack.active.instance is Child.HomeChild.NewsDetails
+                    selectedTab = when (stack.active.instance) {
+                        is Child.TabsChild.CategoriesList -> "category"
+                        is Child.TabsChild.Headlines -> "home"
+                        is Child.TabsChild.SourcesList -> "source"
+                    }
                 )
             }
+        }
+    }
+
+    private fun tabsChildFactory(config: TabsConfigs, componentContext: ComponentContext): Child.TabsChild {
+        return when (config) {
+            is TabsConfigs.HeadlinesConfig -> Child.TabsChild.Headlines(
+                HeadlinesComponent(componentContext, domainComponent.articlesRepository) { item ->
+                    homeTabNavigation.push(HomeTabConfigs.ArticleDetailsConfig(item))
+                }
+            )
+
+            is TabsConfigs.SourcesConfig -> Child.TabsChild.SourcesList(
+                SourcesComponent(componentContext)
+            )
+
+            TabsConfigs.CategoriesConfig -> Child.TabsChild.CategoriesList(
+                CategoriesComponent(componentContext)
+            )
         }
     }
 
     private fun homeTabChildFactory(config: HomeTabConfigs, componentContext: ComponentContext): Child.HomeChild {
         return when (config) {
             is HomeTabConfigs.HeadlinesListConfig -> Child.HomeChild.HeadlinesList(
-                HeadlinesListComponent(componentContext, domainComponent.articlesRepository) { item ->
+                HeadlinesComponent(componentContext, domainComponent.articlesRepository) { item ->
                     homeTabNavigation.push(HomeTabConfigs.ArticleDetailsConfig(item))
                 }
             )
@@ -81,33 +115,27 @@ class RootComponent(
     private fun sourcesTabChildFactory(config: SourcesTabConfigs, componentContext: ComponentContext): Child.SourcesChild {
         return when (config) {
             is SourcesTabConfigs.SourcesListConfig -> Child.SourcesChild.SourcesList(
-                DefaultListComponent2(componentContext)
+                SourcesComponent(componentContext)
             )
         }
     }
 
     fun onTabChange(tab: String) {
-        val stack = if (tab == "home") homeTabStack else sourcesTabStack
-        _state.update {
-            it.copy(
-                selectedTab = tab,
-                stack = stack,
-                showBack = stack.value.active.instance is Child.HomeChild.NewsDetails
-            )
-        }
+        tabsNavigation.bringToFront(
+            when (tab) {
+                "home" -> TabsConfigs.HeadlinesConfig
+                "source" -> TabsConfigs.SourcesConfig
+                else -> TabsConfigs.CategoriesConfig
+            }
+        )
     }
 
     fun onBackClicked() {
-        if (state.value.stack == homeTabStack && state.value.stack.value.backStack.isNotEmpty()) {
-            homeTabNavigation.pop()
-        }
-        if (state.value.stack == sourcesTabStack && state.value.stack.value.backStack.isNotEmpty()) {
-            sourcesTabNavigation.pop()
-        }
-        _state.update {
-            it.copy(
-                showBack = it.stack.value.active.instance is Child.HomeChild.NewsDetails
-            )
+        if (state.value.selectedTab == "home") {
+            tabsNavigation.popWhile { it != root.TabsConfigs.HeadlinesConfig }
+            tabsNavigation.pop()
+        } else {
+            tabsNavigation.pop()
         }
     }
 }

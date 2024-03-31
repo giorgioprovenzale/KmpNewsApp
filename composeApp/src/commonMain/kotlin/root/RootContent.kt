@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -25,9 +26,9 @@ import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
-import list2.ListContent2
-import ui.headlines.detail.DetailContent
-import ui.headlines.list.HeadlinesContent
+import ui.tabs.categories.CategoriesContent
+import ui.tabs.headlines.HeadlinesContent
+import ui.tabs.sources.SourcesContent
 
 @Composable
 fun RootContent(
@@ -71,6 +72,11 @@ fun RootContent(
                             onClick = { component.onTabChange("source") },
                             selected = state.value.selectedTab == "source"
                         )
+                        BottomNavigationItem(
+                            icon = { Icon(Icons.Default.Info, contentDescription = "Category") },
+                            onClick = { component.onTabChange("category") },
+                            selected = state.value.selectedTab == "category"
+                        )
                     }
                 }
             ) {
@@ -79,14 +85,14 @@ fun RootContent(
                     modifier = Modifier.fillMaxSize().background(Color.LightGray)
                 ) {
                     Children(
-                        stack = state.value.stack,
+                        stack = component.tabsStack,
                         modifier = modifier,
                         animation = stackAnimation(fade())
                     ) {
                         when (val child = it.instance) {
-                            is Child.HomeChild.HeadlinesList -> HeadlinesContent(child.component)
-                            is Child.HomeChild.NewsDetails -> DetailContent(child.component)
-                            is Child.SourcesChild.SourcesList -> ListContent2(child.component)
+                            is Child.TabsChild.CategoriesList -> CategoriesContent(child.component)
+                            is Child.TabsChild.Headlines -> HeadlinesContent(child.component)
+                            is Child.TabsChild.SourcesList -> SourcesContent(child.component)
                         }
                     }
                 }

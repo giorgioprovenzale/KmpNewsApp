@@ -1,21 +1,15 @@
-package list2
+package ui.tabs.categories
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 
-interface ListComponent2 {
-    val model: Value<String>
-
-
-}
-
-class DefaultListComponent2(
+class CategoriesComponent(
     private val componentContext: ComponentContext,
-) : ListComponent2, ComponentContext by componentContext {
+) : ComponentContext by componentContext {
 
     private val _model = MutableValue<String>("")
-    override val model: Value<String> = _model
+    val model: Value<String> = _model
 
 
 }

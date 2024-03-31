@@ -4,6 +4,19 @@ import domain.models.Article
 import kotlinx.serialization.Serializable
 
 @Serializable
+sealed interface TabsConfigs {
+
+    @Serializable
+    data object HeadlinesConfig : TabsConfigs
+
+    @Serializable
+    data object SourcesConfig : TabsConfigs
+
+    @Serializable
+    data object CategoriesConfig : TabsConfigs
+}
+
+@Serializable
 sealed interface HomeTabConfigs {
 
     @Serializable

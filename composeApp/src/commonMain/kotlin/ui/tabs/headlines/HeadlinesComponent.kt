@@ -1,4 +1,4 @@
-package ui.headlines.list
+package ui.tabs.headlines
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
@@ -10,14 +10,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HeadlinesListComponent(
+class HeadlinesComponent(
     private val componentContext: ComponentContext,
     private val articlesRepository: ArticlesRepository,
     private val onItemSelected: (item: Article) -> Unit
 ) : ComponentContext by componentContext {
 
-    private val _state = MutableValue<HeadlinesListState>(HeadlinesListState(articles = emptyList()))
-    val state: Value<HeadlinesListState> = _state
+    private val _state = MutableValue<HeadlinesState>(HeadlinesState(articles = emptyList()))
+    val state: Value<HeadlinesState> = _state
     fun onItemClicked(item: Article) {
         onItemSelected(item)
     }
@@ -29,7 +29,7 @@ class HeadlinesListComponent(
     init {
         CoroutineScope(Dispatchers.Default).launch(handler) {
             val articles = articlesRepository.getHeadlines()
-            _state.value = HeadlinesListState(articles = articles)
+            _state.value = HeadlinesState(articles = articles)
         }
     }
 }
