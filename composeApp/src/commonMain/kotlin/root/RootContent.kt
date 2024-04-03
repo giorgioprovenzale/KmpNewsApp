@@ -20,12 +20,12 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import ui.tabs.categories.CategoriesContent
 import ui.tabs.headlines.HeadlinesContent
 import ui.tabs.sources.SourcesContent
@@ -35,7 +35,7 @@ fun RootContent(
     component: RootComponent,
     modifier: Modifier = Modifier
 ) {
-    val state = component.state.collectAsState()
+    val state = component.state.subscribeAsState()
 
     MaterialTheme {
         Box(
@@ -48,18 +48,10 @@ fun RootContent(
                 topBar = {
                     TopAppBar(
                         title = { Text(text = state.value.selectedTab) },
-                        navigationIcon = if (state.value.showBack) {
-                            {
-                                IconButton(
-                                    onClick = { component.onBackClicked() },
-                                    content = { Icon(Icons.Default.ArrowBack, contentDescription = "back") })
-                            }
-                        } else null
                     )
                 },
                 bottomBar = {
                     BottomNavigation(
-
                     ) {
                         BottomNavigationItem(
                             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
@@ -100,7 +92,5 @@ fun RootContent(
         }
 
     }
-
-
 }
 
