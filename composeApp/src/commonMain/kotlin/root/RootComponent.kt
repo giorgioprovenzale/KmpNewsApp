@@ -20,14 +20,9 @@ class RootComponent(
 ) : ComponentContext by componentContext {
 
     private var tabsNavigation: StackNavigation<TabsConfigs> = StackNavigation()
-    var tabsStack: Value<ChildStack<TabsConfigs, Child.TabsChild>>
+    private var tabsStack: Value<ChildStack<TabsConfigs, Child.TabsChild>>
 
-    private val initialState: RootState
-        get() = RootState(
-            selectedTab = "home",
-        )
-
-    private val _state = MutableValue(initialState)
+    private val _state = MutableValue(RootState())
     val state: Value<RootState> = _state
 
     init {
@@ -46,7 +41,8 @@ class RootComponent(
                             is Child.TabsChild.CategoriesList -> "category"
                             is Child.TabsChild.Headlines -> "home"
                             is Child.TabsChild.SourcesList -> "source"
-                        }
+                        },
+                        stack = stack
                     )
                 }
             }
