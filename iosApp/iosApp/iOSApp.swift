@@ -13,42 +13,18 @@ struct iOSApp: App {
     
 	var body: some Scene {
 		WindowGroup {
-            ContentView(rootComponet: rootHolder.root)
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                    debugPrint("Swift onResume")
-                    LifecycleRegistryExtKt.resume(rootHolder.lifecycle)
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                    debugPrint("Swift onPause")
-                    LifecycleRegistryExtKt.pause(rootHolder.lifecycle)
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                    debugPrint("Swift onStop")
-                    LifecycleRegistryExtKt.stop(rootHolder.lifecycle)
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
-                    debugPrint("Swift onDestroy")
-                    LifecycleRegistryExtKt.destroy(rootHolder.lifecycle)
-                }
+            ContentView(domainComponent: rootHolder.domainComponent)
 		}
 	}
 }
 
 class RootHolder: ObservableObject {
 
-    let lifecycle: LifecycleRegistry
-    let root: RootComponent
+    let domainComponent: DomainComponent
     
     init() {
-        lifecycle = koin.lifecycleRegistry
-        root = koin.rootComponent
-        LifecycleRegistryExtKt.create(lifecycle)
+        domainComponent = koin.domainComponent
     }
-    
-    deinit {
-        LifecycleRegistryExtKt.destroy(lifecycle)
-    }
-
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {

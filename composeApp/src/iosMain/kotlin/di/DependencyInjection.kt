@@ -3,19 +3,15 @@ package di
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import domain.DomainComponent
 import org.koin.core.Koin
 import org.koin.dsl.module
 import root.RootComponent
 
 val iosModule = module {
-    single { LifecycleRegistry() }
-    single<ComponentContext> { DefaultComponentContext(lifecycle = get<LifecycleRegistry>()) }
 }
 
-fun initKoinIOS() = initKoin(additionalModules = listOf(iosModule))
+fun initKoinIOS() = initKoin(additionalModules = listOf())
 
-val Koin.rootComponent: RootComponent
-    get() = get()
-
-val Koin.lifecycleRegistry: LifecycleRegistry
+val Koin.domainComponent: DomainComponent
     get() = get()

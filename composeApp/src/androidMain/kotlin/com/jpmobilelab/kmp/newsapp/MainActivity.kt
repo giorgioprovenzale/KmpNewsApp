@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalDecomposeApi::class)
+
 package com.jpmobilelab.kmp.newsapp
 
 import android.graphics.Color
@@ -12,13 +14,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.defaultComponentContext
+import com.arkivanov.decompose.retainedComponent
 import com.seiko.imageloader.ImageLoader
 import com.seiko.imageloader.LocalImageLoader
 import com.seiko.imageloader.cache.memory.maxSizePercent
 import com.seiko.imageloader.component.setupDefaultComponents
 import com.seiko.imageloader.defaultImageResultMemoryCache
 import com.seiko.imageloader.option.androidContext
+import domain.DomainComponent
 import okio.Path.Companion.toOkioPath
 import org.koin.android.ext.android.inject
 import org.koin.core.context.loadKoinModules
@@ -28,15 +33,7 @@ import root.RootContent
 
 class MainActivity : ComponentActivity() {
 
-    private val modules = module {
-        single<ComponentContext> { defaultComponentContext() }
-    }
-
-    init {
-        loadKoinModules(modules)
-    }
-
-    private val rootComponent: RootComponent by inject()
+    private val domainComponent: DomainComponent by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +46,13 @@ class MainActivity : ComponentActivity() {
                 Color.TRANSPARENT, Color.TRANSPARENT
             )
         )
+
+        val rootComponent = retainedComponent {
+            RootComponent(
+                componentContext = it,
+                domainComponent = domainComponent
+            )
+        }
 
         setContent {
             CompositionLocalProvider(
