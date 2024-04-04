@@ -13,10 +13,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,30 +39,18 @@ fun RootContent(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = { Text(text = state.value.selectedTab.orEmpty()) },
-                    )
-                },
                 bottomBar = {
                     BottomNavigation(
                     ) {
-                        BottomNavigationItem(
-                            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                            onClick = { component.onTabChange("home") },
-                            selected = state.value.selectedTab == "home"
-
-                        )
-                        BottomNavigationItem(
-                            icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Source") },
-                            onClick = { component.onTabChange("source") },
-                            selected = state.value.selectedTab == "source"
-                        )
-                        BottomNavigationItem(
-                            icon = { Icon(Icons.Default.Info, contentDescription = "Category") },
-                            onClick = { component.onTabChange("category") },
-                            selected = state.value.selectedTab == "category"
-                        )
+                        tabItems().forEach {
+                            BottomNavigationItem(
+                                icon = { Icon(it.icon, contentDescription = it.label) },
+                                label = { Text(text = it.label) },
+                                alwaysShowLabel = false,
+                                onClick = { component.onTabChange(it.type) },
+                                selected = state.value.stack?.active?.configuration == it.type
+                            )
+                        }
                     }
                 }
             ) {
@@ -81,9 +65,9 @@ fun RootContent(
                             animation = stackAnimation(fade())
                         ) {
                             when (val child = it.instance) {
-                                is Child.TabsChild.CategoriesList -> CategoriesContent(child.component)
-                                is Child.TabsChild.Headlines -> HeadlinesContent(child.component)
-                                is Child.TabsChild.SourcesList -> SourcesContent(child.component)
+                                is TabsChild.CategoriesList -> CategoriesContent(child.component)
+                                is TabsChild.Headlines -> HeadlinesContent(child.component)
+                                is TabsChild.SourcesList -> SourcesContent(child.component)
                             }
                         }
                     }
