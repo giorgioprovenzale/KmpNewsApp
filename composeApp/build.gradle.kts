@@ -1,5 +1,4 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.konan.properties.Properties
 
 buildscript {
@@ -7,8 +6,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
-        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.15.1")
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.buildkonfig.gradle.plugin)
     }
 }
 
@@ -17,7 +16,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     id("com.codingfeline.buildkonfig") version "+"
-    kotlin("plugin.serialization") version "1.9.21" //decompose step2
+    kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
 kotlin {
@@ -38,8 +37,8 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
 
-            export("com.arkivanov.decompose:decompose:2.2.2-compose-experimental")
-            export("com.arkivanov.essenty:lifecycle:1.3.0")
+            export(libs.decompose)
+            export(libs.lifecycle)
         }
     }
 
@@ -50,8 +49,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             //decompose step3
-            implementation("com.arkivanov.decompose:decompose:2.2.2-compose-experimental")
-            implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.2-compose-experimental")
+            implementation(libs.decompose)
+            implementation(libs.arkivanov.extensions.compose.jetbrains)
 
         }
         commonMain.dependencies {
@@ -60,7 +59,6 @@ kotlin {
             implementation(compose.material)
             implementation(compose.material3)
             implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
             implementation(libs.kotlinx.coroutines.core)
@@ -73,27 +71,27 @@ kotlin {
 
             api(libs.image.loader)
 
-            implementation("com.arkivanov.decompose:decompose:2.2.2-compose-experimental")
-            implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.2-compose-experimental")
+            implementation(libs.decompose)
+            implementation(libs.arkivanov.extensions.compose.jetbrains)
             //decompose step1
 
             //koin step1
-            implementation("io.insert-koin:koin-core:3.5.3")
+            implementation(libs.koin.core)
 
-            implementation("io.github.aakira:napier:2.7.1")
+            implementation(libs.napier)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
 
             //koin step2
-            implementation("io.insert-koin:koin-android:3.5.3")
+            implementation(libs.koin.android)
 
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
 
-            api("com.arkivanov.decompose:decompose:2.2.2-compose-experimental")
-            api("com.arkivanov.essenty:lifecycle:1.3.0")
+            api(libs.decompose)
+            api(libs.lifecycle)
 
         }
     }

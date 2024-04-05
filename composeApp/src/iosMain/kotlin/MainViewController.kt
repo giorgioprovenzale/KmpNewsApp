@@ -6,8 +6,12 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.seiko.imageloader.ImageLoader
 import com.seiko.imageloader.LocalImageLoader
+import com.seiko.imageloader.cache.memory.MemoryCache
 import com.seiko.imageloader.component.setupDefaultComponents
 import com.seiko.imageloader.defaultImageResultMemoryCache
+import com.seiko.imageloader.intercept.bitmapMemoryCacheConfig
+import com.seiko.imageloader.intercept.imageMemoryCache
+import com.seiko.imageloader.intercept.painterMemoryCache
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import okio.Path.Companion.toPath
@@ -41,8 +45,8 @@ fun generateImageLoader(): ImageLoader {
         interceptor {
             // cache 100 success image result, without bitmap
             defaultImageResultMemoryCache()
-            memoryCacheConfig {
-                maxSizeBytes(32 * 1024 * 1024) // 32MB
+            bitmapMemoryCacheConfig {
+                maxSize(32 * 1024 * 1024)
             }
             diskCacheConfig {
                 directory(getCacheDir().toPath().resolve("image_cache"))
