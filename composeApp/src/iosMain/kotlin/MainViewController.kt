@@ -8,7 +8,6 @@ import com.seiko.imageloader.ImageLoader
 import com.seiko.imageloader.LocalImageLoader
 import com.seiko.imageloader.component.setupDefaultComponents
 import com.seiko.imageloader.defaultImageResultMemoryCache
-import domain.DomainComponent
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import okio.Path.Companion.toPath
@@ -18,13 +17,12 @@ import platform.Foundation.NSUserDomainMask
 import root.RootComponent
 import root.RootContent
 
-fun MainViewController(domainComponent: DomainComponent) = ComposeUIViewController {
+fun MainViewController() = ComposeUIViewController {
     Napier.base(DebugAntilog())
 
     val rootComponent = remember {
         RootComponent(
             componentContext = DefaultComponentContext(LifecycleRegistry()),
-            domainComponent = domainComponent
         )
     }
 

@@ -9,12 +9,15 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class HeadlinesComponent(
     private val componentContext: ComponentContext,
-    private val articlesRepository: ArticlesRepository,
     private val onItemSelected: (item: Article) -> Unit
-) : ComponentContext by componentContext {
+) : KoinComponent, ComponentContext by componentContext {
+
+    private val articlesRepository: ArticlesRepository by inject()
 
     private val _state = MutableValue<HeadlinesState>(HeadlinesState(articles = emptyList()))
     val state: Value<HeadlinesState> = _state
