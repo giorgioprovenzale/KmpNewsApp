@@ -37,11 +37,6 @@ class RootComponent(
             observe { stack ->
                 _state.update {
                     it.copy(
-                        selectedTab = when (stack.active.instance) {
-                            is TabsChild.CategoriesList -> "category"
-                            is TabsChild.Headlines -> "home"
-                            is TabsChild.SourcesList -> "source"
-                        },
                         stack = stack
                     )
                 }

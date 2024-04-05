@@ -1,5 +1,6 @@
 package root
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
@@ -8,7 +9,13 @@ import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
+import kmpnewsapp.composeapp.generated.resources.Res
+import kmpnewsapp.composeapp.generated.resources.categories
+import kmpnewsapp.composeapp.generated.resources.home
+import kmpnewsapp.composeapp.generated.resources.sources
 import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 
 @Serializable
 sealed class TabsConfig {
@@ -23,29 +30,41 @@ sealed class TabsConfig {
     data object CategoriesConfig : TabsConfig()
 }
 
+enum class TabKey {
+    Home, Sources, Categories
+}
+
 data class TabItem(
     val type: TabsConfig,
     val icon: ImageVector,
-    val label: String,
+    val key: TabKey,
 )
 
 fun tabItems() = listOf(
     TabItem(
         type = TabsConfig.HeadlinesConfig,
         icon = newspaper(),
-        label = "Home"
+        key = TabKey.Home,
     ),
     TabItem(
         type = TabsConfig.SourcesConfig,
         icon = sources(),
-        label = "Sources"
+        key = TabKey.Sources,
     ),
     TabItem(
         type = TabsConfig.CategoriesConfig,
         icon = category(),
-        label = "Categories"
+        key = TabKey.Categories,
     )
 )
+
+@ExperimentalResourceApi
+@Composable
+fun GetTabTitleByKey(key: TabKey) = when (key) {
+    TabKey.Home -> stringResource(Res.string.home)
+    TabKey.Sources -> stringResource(Res.string.sources)
+    TabKey.Categories -> stringResource(Res.string.categories)
+}
 
 fun newspaper(): ImageVector = ImageVector.Builder(
     name = "newspaper",

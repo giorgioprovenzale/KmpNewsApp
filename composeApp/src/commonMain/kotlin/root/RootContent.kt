@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package root
 
 import androidx.compose.foundation.background
@@ -20,6 +22,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.tabs.categories.CategoriesContent
 import ui.tabs.headlines.HeadlinesContent
 import ui.tabs.sources.SourcesContent
@@ -44,8 +47,8 @@ fun RootContent(
                     ) {
                         tabItems().forEach {
                             BottomNavigationItem(
-                                icon = { Icon(it.icon, contentDescription = it.label) },
-                                label = { Text(text = it.label) },
+                                icon = { Icon(it.icon, contentDescription = GetTabTitleByKey(it.key)) },
+                                label = { Text(text = GetTabTitleByKey(it.key)) },
                                 alwaysShowLabel = false,
                                 onClick = { component.onTabChange(it.type) },
                                 selected = state.value.stack?.active?.configuration == it.type
