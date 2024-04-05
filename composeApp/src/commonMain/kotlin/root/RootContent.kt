@@ -14,7 +14,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,17 +21,19 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.router.stack.bringToFront
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.tabs.categories.CategoriesContent
 import ui.tabs.headlines.HeadlinesContent
 import ui.tabs.sources.SourcesContent
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun RootContent(
     component: RootComponent,
     modifier: Modifier = Modifier
 ) {
-    val state = component.state.subscribeAsState()
+    val stack = component.tabsStack.subscribeAsState()
 
     MaterialTheme {
         Box(
@@ -50,30 +51,28 @@ fun RootContent(
                                 icon = { Icon(it.icon, contentDescription = GetTabTitleByKey(it.key)) },
                                 label = { Text(text = GetTabTitleByKey(it.key)) },
                                 alwaysShowLabel = false,
-                                onClick = { component.onTabChange(it.type) },
-                                selected = state.value.stack?.active?.configuration == it.type
+                                onClick = { component.tabsNavigation.bringToFront(it.type) },
+                                selected = stack.value.active.configuration == it.type
                             )
                         }
                     }
                 }
             ) {
-
                 Box(
                     modifier = Modifier.fillMaxSize().background(Color.LightGray)
                 ) {
-                    state.value.stack?.let { stack ->
-                        Children(
-                            stack = stack,
-                            modifier = modifier,
-                            animation = stackAnimation(fade())
-                        ) {
-                            when (val child = it.instance) {
-                                is TabsChild.CategoriesList -> CategoriesContent(child.component)
-                                is TabsChild.Headlines -> HeadlinesContent(child.component)
-                                is TabsChild.SourcesList -> SourcesContent(child.component)
-                            }
+                    Children(
+                        stack = stack.value,
+                        modifier = modifier,
+                        animation = stackAnimation(fade())
+                    ) {
+                        when (val child = it.instance) {
+                            is TabsChild.CategoriesList -> CategoriesContent(child.component)
+                            is TabsChild.Headlines -> HeadlinesContent(child.component)
+                            is TabsChild.SourcesList -> SourcesContent(child.component)
                         }
                     }
+
                 }
             }
         }
