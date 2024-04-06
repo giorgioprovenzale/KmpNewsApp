@@ -18,7 +18,7 @@ class RootComponent(
     var tabsStack: Value<ChildStack<TabsConfig, TabsChild>> = childStack(
         source = tabsNavigation,
         serializer = TabsConfig.serializer(),
-        initialConfiguration = TabsConfig.HeadlinesConfig,
+        initialConfiguration = TabsConfig.HeadlinesTabConfig,
         handleBackButton = true,
         childFactory = ::tabsChildFactory,
         key = "tabs"
@@ -26,17 +26,17 @@ class RootComponent(
 
     private fun tabsChildFactory(config: TabsConfig, componentContext: ComponentContext): TabsChild {
         return when (config) {
-            is TabsConfig.HeadlinesConfig -> TabsChild.Headlines(
+            is TabsConfig.HeadlinesTabConfig -> TabsChild.Headlines(
                 HeadlinesComponent(componentContext) { item ->
                     // open details
                 }
             )
 
-            is TabsConfig.SourcesConfig -> TabsChild.SourcesList(
+            is TabsConfig.SourcesTabConfig -> TabsChild.SourcesList(
                 SourcesComponent(componentContext)
             )
 
-            TabsConfig.CategoriesConfig -> TabsChild.CategoriesList(
+            TabsConfig.CategoriesTabConfig -> TabsChild.CategoriesList(
                 CategoriesComponent(componentContext)
             )
         }

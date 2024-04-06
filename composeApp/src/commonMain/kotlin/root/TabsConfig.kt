@@ -21,13 +21,13 @@ import org.jetbrains.compose.resources.stringResource
 sealed class TabsConfig {
 
     @Serializable
-    data object HeadlinesConfig : TabsConfig()
+    data object HeadlinesTabConfig : TabsConfig()
 
     @Serializable
-    data object SourcesConfig : TabsConfig()
+    data object SourcesTabConfig : TabsConfig()
 
     @Serializable
-    data object CategoriesConfig : TabsConfig()
+    data object CategoriesTabConfig : TabsConfig()
 }
 
 enum class TabKey {
@@ -42,17 +42,17 @@ data class TabItem(
 
 fun tabItems() = listOf(
     TabItem(
-        type = TabsConfig.HeadlinesConfig,
+        type = TabsConfig.HeadlinesTabConfig,
         icon = newspaper(),
         key = TabKey.Home,
     ),
     TabItem(
-        type = TabsConfig.SourcesConfig,
+        type = TabsConfig.SourcesTabConfig,
         icon = sources(),
         key = TabKey.Sources,
     ),
     TabItem(
-        type = TabsConfig.CategoriesConfig,
+        type = TabsConfig.CategoriesTabConfig,
         icon = category(),
         key = TabKey.Categories,
     )
