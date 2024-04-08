@@ -21,12 +21,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
 import domain.models.Article
+import theme.spacing_1x
+import theme.spacing_2x
 
 @Composable
 fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
     Card(
         shape = RoundedCornerShape(15.dp),
-        modifier = Modifier.padding(8.dp).fillMaxWidth().clickable {
+        modifier = Modifier.padding(spacing_1x).fillMaxWidth().clickable {
             onItemClicked(article)
         },
         elevation = 2.dp
@@ -54,7 +56,7 @@ fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
                     style = MaterialTheme.typography.h6,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(all = 16.dp)
+                    modifier = Modifier.padding(all = spacing_2x)
                 )
             }
         }
