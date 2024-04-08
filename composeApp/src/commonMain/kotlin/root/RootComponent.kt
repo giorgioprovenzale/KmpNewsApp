@@ -27,9 +27,7 @@ class RootComponent(
     private fun tabsChildFactory(config: TabsConfig, componentContext: ComponentContext): TabsChild {
         return when (config) {
             is TabsConfig.HeadlinesTabConfig -> TabsChild.Headlines(
-                HeadlinesComponent(componentContext) { item ->
-                    // open details
-                }
+                HeadlinesComponent(componentContext)
             )
 
             is TabsConfig.SourcesTabConfig -> TabsChild.SourcesList(

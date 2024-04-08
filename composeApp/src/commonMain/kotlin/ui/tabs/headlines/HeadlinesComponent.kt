@@ -1,38 +1,43 @@
 package ui.tabs.headlines
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
-import domain.models.Article
-import domain.repositories.ArticlesRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import ui.articles.details.ArticleDetailsComponent
+import ui.articles.list.ArticlesListComponent
 
 class HeadlinesComponent(
     private val componentContext: ComponentContext,
-    private val onItemSelected: (item: Article) -> Unit
-) : KoinComponent, ComponentContext by componentContext {
+) : ComponentContext by componentContext {
 
-    private val articlesRepository: ArticlesRepository by inject()
+    private var headlinesNavigation: StackNavigation<HeadlinesConfig> = StackNavigation()
+    var headlinesStack: Value<ChildStack<HeadlinesConfig, HeadlinesChild>> = childStack(
+        source = headlinesNavigation,
+        serializer = HeadlinesConfig.serializer(),
+        initialConfiguration = HeadlinesConfig.ArticlesListConfig,
+        handleBackButton = true,
+        childFactory = ::headlinesChildFactory,
+        key = "headlines"
+    )
 
-    private val _state = MutableValue<HeadlinesState>(HeadlinesState(articles = emptyList()))
-    val state: Value<HeadlinesState> = _state
-    fun onItemClicked(item: Article) {
-        onItemSelected(item)
-    }
+    private fun headlinesChildFactory(config: HeadlinesConfig, componentContext: ComponentContext): HeadlinesChild {
+        return when (config) {
+            is HeadlinesConfig.ArticleDetailsConfig -> HeadlinesChild.ArticleDetails(
+                ArticleDetailsComponent(
+                    componentContext,
+                    config.article
+                )
+            )
 
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        println("CoroutineExceptionHandler got $exception")
-    }
-
-    init {
-        CoroutineScope(Dispatchers.Default).launch(handler) {
-            val articles = articlesRepository.getHeadlines()
-            _state.value = HeadlinesState(articles = articles)
+            HeadlinesConfig.ArticlesListConfig ->
+                HeadlinesChild.ArticlesList(ArticlesListComponent(componentContext) {
+                    headlinesNavigation.push(HeadlinesConfig.ArticleDetailsConfig(it))
+                })
         }
     }
 }

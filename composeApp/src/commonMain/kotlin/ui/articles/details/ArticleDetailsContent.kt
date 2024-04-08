@@ -1,4 +1,4 @@
-package ui.headlines.detail
+package ui.articles.details
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import ui.shared.ArticleItem
 
 @Composable
-fun DetailContent(
+fun ArticleDetailsContent(
     component: ArticleDetailsComponent
 ) {
 

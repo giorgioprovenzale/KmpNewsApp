@@ -1,4 +1,4 @@
-package ui.headlines.detail
+package ui.articles.details
 
 import domain.models.Article
 
