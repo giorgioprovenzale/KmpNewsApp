@@ -33,6 +33,7 @@ class ArticlesListComponent(
             _state.value = HeadlinesState(articles = articles)
         }
     }
+
     fun onItemClicked(item: Article) {
         onArticleClicked(item)
     }

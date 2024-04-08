@@ -2,6 +2,7 @@ package di
 
 import com.jpmobilelab.kmp.newsapp.BuildKonfig
 import domain.interactors.GetHeadlinesArticlesInteractor
+import domain.interactors.GetSourcesInteractor
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -39,13 +40,12 @@ fun networkModule() = module {
     }
 
     single {
-        ApiService(
-            httpClient = get()
-        )
+        ApiService(httpClient = get())
     }
     single {
-        GetHeadlinesArticlesInteractor(
-            apiService = get()
-        )
+        GetHeadlinesArticlesInteractor(apiService = get())
+    }
+    single {
+        GetSourcesInteractor(apiService = get())
     }
 }
