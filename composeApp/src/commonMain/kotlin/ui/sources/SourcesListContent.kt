@@ -1,16 +1,15 @@
-package ui.articles.list
+package ui.sources
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import ui.shared.ArticlesList
 
 @Composable
-fun ArticlesListContent(
-    component: ArticlesListComponent
+fun SourcesListContent(
+    component: SourcesListComponent
 ) {
     val state = component.state.subscribeAsState()
 
-    ArticlesList(
-        articles = state.value.articles,
+    SourcesList(
+        sources = state.value.sources,
         onItemClicked = { component.onItemClicked(it) })
 }
