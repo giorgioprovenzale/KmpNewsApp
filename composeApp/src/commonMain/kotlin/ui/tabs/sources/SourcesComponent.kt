@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import ui.articles.details.ArticleDetailsComponent
@@ -27,7 +28,9 @@ class SourcesComponent(
     private fun sourcesChildFactory(config: SourcesConfig, componentContext: ComponentContext): SourcesChild {
         return when (config) {
 
-            is SourcesConfig.ArticleDetailsConfig -> SourcesChild.ArticleDetails(ArticleDetailsComponent(componentContext, config.article))
+            is SourcesConfig.ArticleDetailsConfig -> SourcesChild.ArticleDetails(ArticleDetailsComponent(componentContext, config.article){
+                sourcesNavigation.pop()
+            })
             SourcesConfig.ArticlesListConfig -> SourcesChild.ArticlesList(ArticlesListComponent(componentContext) {
                 sourcesNavigation.push(SourcesConfig.ArticleDetailsConfig(it))
             })

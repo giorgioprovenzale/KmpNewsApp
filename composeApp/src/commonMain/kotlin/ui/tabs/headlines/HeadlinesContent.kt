@@ -1,5 +1,6 @@
 package ui.tabs.headlines
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
@@ -9,6 +10,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import ui.articles.details.ArticleDetailsContent
 import ui.articles.list.ArticlesListContent
 
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalDecomposeApi
 @Composable
 fun HeadlinesContent(

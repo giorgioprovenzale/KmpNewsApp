@@ -8,8 +8,13 @@ import domain.models.Article
 class ArticleDetailsComponent(
     private val componentContext: ComponentContext,
     item: Article,
+    private val onBack: () -> Unit,
 ) : ComponentContext by componentContext {
 
     private val _state = MutableValue(ArticleDetailsState(item = item))
     val state: Value<ArticleDetailsState> = _state
+
+    fun onBackClicked() {
+        onBack()
+    }
 }

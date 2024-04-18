@@ -1,12 +1,11 @@
 package ui.tabs.headlines
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
-import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import ui.articles.details.ArticleDetailsComponent
 import ui.articles.list.ArticlesListComponent
@@ -31,7 +30,9 @@ class HeadlinesComponent(
                 ArticleDetailsComponent(
                     componentContext,
                     config.article
-                )
+                ) {
+                    headlinesNavigation.pop()
+                }
             )
 
             HeadlinesConfig.ArticlesListConfig ->

@@ -1,8 +1,10 @@
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.arkivanov.decompose.DefaultComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.seiko.imageloader.ImageLoader
 import com.seiko.imageloader.LocalImageLoader
@@ -21,6 +23,8 @@ import platform.Foundation.NSUserDomainMask
 import root.RootComponent
 import root.RootContent
 
+@ExperimentalDecomposeApi
+@ExperimentalMaterial3Api
 fun MainViewController() = ComposeUIViewController {
     Napier.base(DebugAntilog())
 
