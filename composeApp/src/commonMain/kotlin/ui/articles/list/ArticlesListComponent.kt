@@ -14,7 +14,7 @@ import org.koin.core.component.inject
 
 class ArticlesListComponent(
     private val componentContext: ComponentContext,
-    private val onArticleClicked: (Article) -> Unit,
+    private val onArticleSelected: (Article) -> Unit,
 ) : KoinComponent, ComponentContext by componentContext {
 
     private val articlesRepository: ArticlesRepository by inject()
@@ -34,6 +34,6 @@ class ArticlesListComponent(
     }
 
     fun onItemClicked(item: Article) {
-        onArticleClicked(item)
+        onArticleSelected(item)
     }
 }
