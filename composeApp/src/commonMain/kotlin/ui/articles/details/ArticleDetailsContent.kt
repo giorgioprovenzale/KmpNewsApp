@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import theme.spacing_2x
+import ui.shared.ArticleDetails
 import ui.shared.ArticleItem
 
 @Composable
@@ -20,6 +21,6 @@ fun ArticleDetailsContent(
         modifier = Modifier.fillMaxSize().padding(spacing_2x),
     ) {
 
-        ArticleItem(state.value.item) {}
+        ArticleDetails(state.value.item)
     }
 }
