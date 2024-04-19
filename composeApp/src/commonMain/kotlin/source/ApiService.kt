@@ -8,7 +8,22 @@ import source.data.SourcesResponse
 
 class ApiService constructor(private val httpClient: HttpClient) {
 
-    suspend fun getHeadlines(): NewsResponse = httpClient.get("top-headlines").body<NewsResponse>()
+    suspend fun getHeadlines(): NewsResponse = httpClient.get("top-headlines") {
+        url {
+            parameters.append("country", "us")
+        }
+    }.body<NewsResponse>()
 
-    suspend fun getSources(): SourcesResponse = httpClient.get("top-headlines/sources").body<SourcesResponse>()
+    suspend fun getSources(): SourcesResponse = httpClient.get("top-headlines/sources") {
+        url {
+            parameters.append("country", "us")
+        }
+    }.body<SourcesResponse>()
+
+    suspend fun getHeadlinesBySource(sourceId: String): NewsResponse = httpClient.get("top-headlines") {
+        url {
+            parameters.append("sources", sourceId)
+        }
+    }.body<NewsResponse>()
+
 }

@@ -36,9 +36,11 @@ class HeadlinesComponent(
             )
 
             HeadlinesConfig.ArticlesListConfig ->
-                HeadlinesChild.ArticlesList(ArticlesListComponent(componentContext) {
-                    headlinesNavigation.push(HeadlinesConfig.ArticleDetailsConfig(it))
-                })
+                HeadlinesChild.ArticlesList(ArticlesListComponent(
+                    componentContext = componentContext,
+                    onArticleSelected = { headlinesNavigation.push(HeadlinesConfig.ArticleDetailsConfig(it)) },
+                    onBack = { headlinesNavigation.pop() }
+                ))
         }
     }
 }

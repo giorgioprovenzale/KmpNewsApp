@@ -14,7 +14,7 @@ import org.koin.core.component.inject
 
 class SourcesListComponent(
     private val componentContext: ComponentContext,
-    private val onSourceClicked: (Source) -> Unit,
+    private val onSourceSelected: (Source) -> Unit,
 ) : KoinComponent, ComponentContext by componentContext {
 
     private val sourcesRepository: SourcesRepository by inject()
@@ -34,6 +34,6 @@ class SourcesListComponent(
     }
 
     fun onItemClicked(item: Source) {
-        onSourceClicked(item)
+        onSourceSelected(item)
     }
 }

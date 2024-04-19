@@ -7,7 +7,10 @@ import org.koin.dsl.module
 fun commonModule() = networkModule() + module {
 
     single {
-        ArticlesRepository(getHeadlinesArticles = get())
+        ArticlesRepository(
+            getHeadlinesArticles = get(),
+            getHeadlinesArticlesBySource = get()
+        )
     }
     single {
         SourcesRepository(getSourcesInteractor = get())

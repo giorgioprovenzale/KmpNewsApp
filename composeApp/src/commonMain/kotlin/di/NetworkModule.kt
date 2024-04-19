@@ -1,6 +1,7 @@
 package di
 
 import com.jpmobilelab.kmp.newsapp.BuildKonfig
+import domain.interactors.GetHeadlinesArticlesBySourceInteractor
 import domain.interactors.GetHeadlinesArticlesInteractor
 import domain.interactors.GetSourcesInteractor
 import io.ktor.client.*
@@ -22,7 +23,6 @@ fun networkModule() = module {
                     host = "newsapi.org"
                     path("v2/")
                     parameters.append("apiKey", BuildKonfig.API_KEY)
-                    parameters.append("country", "us")
                 }
             }
             install(ContentNegotiation) {
@@ -47,5 +47,8 @@ fun networkModule() = module {
     }
     single {
         GetSourcesInteractor(apiService = get())
+    }
+    single {
+        GetHeadlinesArticlesBySourceInteractor(apiService = get())
     }
 }

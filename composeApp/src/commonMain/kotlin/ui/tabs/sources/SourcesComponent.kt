@@ -28,15 +28,20 @@ class SourcesComponent(
     private fun sourcesChildFactory(config: SourcesConfig, componentContext: ComponentContext): SourcesChild {
         return when (config) {
 
-            is SourcesConfig.ArticleDetailsConfig -> SourcesChild.ArticleDetails(ArticleDetailsComponent(componentContext, config.article){
+            is SourcesConfig.ArticleDetailsConfig -> SourcesChild.ArticleDetails(ArticleDetailsComponent(componentContext, config.article) {
                 sourcesNavigation.pop()
             })
-            SourcesConfig.ArticlesListConfig -> SourcesChild.ArticlesList(ArticlesListComponent(componentContext) {
-                sourcesNavigation.push(SourcesConfig.ArticleDetailsConfig(it))
-            })
+
+            is SourcesConfig.ArticlesListConfig -> SourcesChild.ArticlesList(
+                ArticlesListComponent(
+                    componentContext,
+                    source = config.source,
+                    onArticleSelected = { sourcesNavigation.push(SourcesConfig.ArticleDetailsConfig(it)) },
+                    onBack = { sourcesNavigation.pop() }
+                ))
 
             SourcesConfig.SourcesListConfig -> SourcesChild.SourcesList(SourcesListComponent(componentContext) {
-
+                sourcesNavigation.push(SourcesConfig.ArticlesListConfig(it))
             })
         }
     }
