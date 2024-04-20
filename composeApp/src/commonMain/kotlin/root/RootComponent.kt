@@ -17,7 +17,7 @@ class RootComponent(
     private val componentContext: ComponentContext,
 ) : KoinComponent, ComponentContext by componentContext {
 
-    private val _state = MutableValue(RootState(title = ""))
+    private val _state = MutableValue(RootState(title = "", showBack = false))
     val state: Value<RootState> = _state
 
     private val currentConfigByTabMap = HashMap<TabsConfig, NavConfig>()
@@ -66,11 +66,11 @@ class RootComponent(
     private fun updateStateByNestedConfig(navConfig: NavConfig?) {
         navConfig?.let {
             when (navConfig) {
-                is NavConfig.HeadlinesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty()) }
-                NavConfig.HeadlinesConfig.ArticlesListConfig -> _state.update { it.copy(title = "Home") }
-                is NavConfig.SourcesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty()) }
-                is NavConfig.SourcesConfig.ArticlesListConfig -> _state.update { it.copy(title = navConfig.source.name) }
-                NavConfig.SourcesConfig.SourcesListConfig -> _state.update { it.copy(title = "Sources") }
+                is NavConfig.HeadlinesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty(), showBack = true) }
+                NavConfig.HeadlinesConfig.ArticlesListConfig -> _state.update { it.copy(title = "Home", showBack = false) }
+                is NavConfig.SourcesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty(), showBack = true) }
+                is NavConfig.SourcesConfig.ArticlesListConfig -> _state.update { it.copy(title = navConfig.source.name, showBack = true) }
+                NavConfig.SourcesConfig.SourcesListConfig -> _state.update { it.copy(title = "Sources", showBack = false) }
             }
         }
     }

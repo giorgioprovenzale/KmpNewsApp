@@ -61,13 +61,14 @@ fun RootContent(
                                 overflow = TextOverflow.Ellipsis
                             )
                         },
-                        navigationIcon = {
-                            IconButton(
-                                onClick = { }
-                            ) {
-                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "back")
+                        navigationIcon = if (state.value.showBack) {
+                            @Composable {
+                                IconButton(onClick = { }) {
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "back")
+                                }
                             }
-                        }
+                        } else null
+
                     )
                 },
                 bottomBar = {
