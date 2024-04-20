@@ -1,4 +1,3 @@
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,7 +23,6 @@ import root.RootComponent
 import root.RootContent
 
 @ExperimentalDecomposeApi
-@ExperimentalMaterial3Api
 fun MainViewController() = ComposeUIViewController {
     Napier.base(DebugAntilog())
 

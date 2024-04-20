@@ -11,15 +11,14 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,13 +30,11 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stac
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.stack.bringToFront
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ui.shared.TopAppBarDefaults
 import ui.tabs.categories.CategoriesContent
 import ui.tabs.headlines.HeadlinesContent
 import ui.tabs.sources.SourcesContent
 
 @ExperimentalDecomposeApi
-@ExperimentalMaterial3Api
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun RootContent(
@@ -56,8 +53,7 @@ fun RootContent(
         ) {
             Scaffold(
                 topBar = {
-                    CenterAlignedTopAppBar(
-                        colors = TopAppBarDefaults.colors(),
+                    TopAppBar(
                         title = {
                             Text(
                                 text = state.value.title,

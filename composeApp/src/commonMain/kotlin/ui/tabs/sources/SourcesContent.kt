@@ -1,7 +1,6 @@
 package ui.tabs.sources
 
 import NavChild
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
@@ -11,7 +10,6 @@ import ui.articles.details.ArticleDetailsContent
 import ui.articles.list.ArticlesListContent
 import ui.sources.SourcesListContent
 
-@ExperimentalMaterial3Api
 @Composable
 fun SourcesContent(
     component: SourcesComponent
