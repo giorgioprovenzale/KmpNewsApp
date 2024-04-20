@@ -1,5 +1,6 @@
 package ui.tabs.headlines
 
+import NavChild
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi
@@ -23,8 +24,8 @@ fun HeadlinesContent(
         animation = stackAnimation(fade())
     ) {
         when (val child = it.instance) {
-            is HeadlinesChild.ArticleDetails -> ArticleDetailsContent(child.component)
-            is HeadlinesChild.ArticlesList -> ArticlesListContent(child.component)
+            is NavChild.HeadlinesChild.ArticleDetails -> ArticleDetailsContent(child.component)
+            is NavChild.HeadlinesChild.ArticlesList -> ArticlesListContent(child.component)
         }
     }
 

@@ -1,5 +1,7 @@
 package ui.tabs.headlines
 
+import NavChild
+import NavConfig
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -12,21 +14,28 @@ import ui.articles.list.ArticlesListComponent
 
 class HeadlinesComponent(
     private val componentContext: ComponentContext,
+    private val onConfigChange: (NavConfig) -> Unit,
 ) : ComponentContext by componentContext {
 
-    private var headlinesNavigation: StackNavigation<HeadlinesConfig> = StackNavigation()
-    var headlinesStack: Value<ChildStack<HeadlinesConfig, HeadlinesChild>> = childStack(
+    private var headlinesNavigation: StackNavigation<NavConfig.HeadlinesConfig> = StackNavigation()
+    var headlinesStack: Value<ChildStack<NavConfig.HeadlinesConfig, NavChild.HeadlinesChild>> = childStack(
         source = headlinesNavigation,
-        serializer = HeadlinesConfig.serializer(),
-        initialConfiguration = HeadlinesConfig.ArticlesListConfig,
+        serializer = NavConfig.HeadlinesConfig.serializer(),
+        initialConfiguration = NavConfig.HeadlinesConfig.ArticlesListConfig,
         handleBackButton = true,
         childFactory = ::headlinesChildFactory,
         key = "headlines"
     )
 
-    private fun headlinesChildFactory(config: HeadlinesConfig, componentContext: ComponentContext): HeadlinesChild {
+    init {
+        headlinesStack.observe {
+            onConfigChange(it.active.configuration)
+        }
+    }
+
+    private fun headlinesChildFactory(config: NavConfig.HeadlinesConfig, componentContext: ComponentContext): NavChild.HeadlinesChild {
         return when (config) {
-            is HeadlinesConfig.ArticleDetailsConfig -> HeadlinesChild.ArticleDetails(
+            is NavConfig.HeadlinesConfig.ArticleDetailsConfig -> NavChild.HeadlinesChild.ArticleDetails(
                 ArticleDetailsComponent(
                     componentContext,
                     config.article
@@ -35,10 +44,10 @@ class HeadlinesComponent(
                 }
             )
 
-            HeadlinesConfig.ArticlesListConfig ->
-                HeadlinesChild.ArticlesList(ArticlesListComponent(
+            NavConfig.HeadlinesConfig.ArticlesListConfig ->
+                NavChild.HeadlinesChild.ArticlesList(ArticlesListComponent(
                     componentContext = componentContext,
-                    onArticleSelected = { headlinesNavigation.push(HeadlinesConfig.ArticleDetailsConfig(it)) },
+                    onArticleSelected = { headlinesNavigation.push(NavConfig.HeadlinesConfig.ArticleDetailsConfig(it)) },
                     onBack = { headlinesNavigation.pop() }
                 ))
         }

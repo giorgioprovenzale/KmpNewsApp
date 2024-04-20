@@ -1,5 +1,7 @@
 package ui.tabs.sources
 
+import NavChild
+import NavConfig
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -13,35 +15,46 @@ import ui.sources.SourcesListComponent
 
 class SourcesComponent(
     private val componentContext: ComponentContext,
+    private val onConfigChange: (NavConfig) -> Unit,
 ) : ComponentContext by componentContext {
 
-    private var sourcesNavigation: StackNavigation<SourcesConfig> = StackNavigation()
-    var sourcesStack: Value<ChildStack<SourcesConfig, SourcesChild>> = childStack(
+    private var sourcesNavigation: StackNavigation<NavConfig.SourcesConfig> = StackNavigation()
+    var sourcesStack: Value<ChildStack<NavConfig.SourcesConfig, NavChild.SourcesChild>> = childStack(
         source = sourcesNavigation,
-        serializer = SourcesConfig.serializer(),
-        initialConfiguration = SourcesConfig.SourcesListConfig,
+        serializer = NavConfig.SourcesConfig.serializer(),
+        initialConfiguration = NavConfig.SourcesConfig.SourcesListConfig,
         handleBackButton = true,
         childFactory = ::sourcesChildFactory,
         key = "sources"
     )
 
-    private fun sourcesChildFactory(config: SourcesConfig, componentContext: ComponentContext): SourcesChild {
+    init {
+        sourcesStack.observe {
+            onConfigChange(it.active.configuration)
+        }
+    }
+
+    private fun sourcesChildFactory(config: NavConfig.SourcesConfig, componentContext: ComponentContext): NavChild.SourcesChild {
         return when (config) {
 
-            is SourcesConfig.ArticleDetailsConfig -> SourcesChild.ArticleDetails(ArticleDetailsComponent(componentContext, config.article) {
-                sourcesNavigation.pop()
-            })
+            is NavConfig.SourcesConfig.ArticleDetailsConfig -> NavChild.SourcesChild.ArticleDetails(
+                ArticleDetailsComponent(
+                    componentContext,
+                    config.article
+                ) {
+                    sourcesNavigation.pop()
+                })
 
-            is SourcesConfig.ArticlesListConfig -> SourcesChild.ArticlesList(
+            is NavConfig.SourcesConfig.ArticlesListConfig -> NavChild.SourcesChild.ArticlesList(
                 ArticlesListComponent(
                     componentContext,
                     source = config.source,
-                    onArticleSelected = { sourcesNavigation.push(SourcesConfig.ArticleDetailsConfig(it)) },
+                    onArticleSelected = { sourcesNavigation.push(NavConfig.SourcesConfig.ArticleDetailsConfig(it)) },
                     onBack = { sourcesNavigation.pop() }
                 ))
 
-            SourcesConfig.SourcesListConfig -> SourcesChild.SourcesList(SourcesListComponent(componentContext) {
-                sourcesNavigation.push(SourcesConfig.ArticlesListConfig(it))
+            NavConfig.SourcesConfig.SourcesListConfig -> NavChild.SourcesChild.SourcesList(SourcesListComponent(componentContext) {
+                sourcesNavigation.push(NavConfig.SourcesConfig.ArticlesListConfig(it))
             })
         }
     }
