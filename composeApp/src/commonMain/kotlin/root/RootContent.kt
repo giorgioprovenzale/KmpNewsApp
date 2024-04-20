@@ -30,6 +30,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.stack.bringToFront
+import extensions.capitalized
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.tabs.categories.CategoriesContent
 import ui.tabs.headlines.HeadlinesContent
@@ -57,9 +58,9 @@ fun RootContent(
                     TopAppBar(
                         title = {
                             Text(
-                                text = state.value.title,
+                                text = state.value.title.capitalized(),
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis,
                             )
                         },
                         navigationIcon = if (state.value.showBack) {

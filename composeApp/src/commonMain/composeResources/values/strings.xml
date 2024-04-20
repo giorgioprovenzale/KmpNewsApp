@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">My awesome app</string>
-    <string name="home">Home</string>
-    <string name="sources">Sources</string>
-    <string name="categories">Categories</string>
+    <string name="home">home</string>
+    <string name="sources">sources</string>
+    <string name="categories">categories</string>
+    <string name="business">business</string>
+    <string name="entertainment">entertainment</string>
+    <string name="general">general</string>
+    <string name="health">health</string>
+    <string name="science">science</string>
+    <string name="sports">sports</string>
+    <string name="technology">technology</string>
 </resources>
