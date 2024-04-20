@@ -10,14 +10,20 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
@@ -25,6 +31,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stac
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.stack.bringToFront
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import ui.shared.TopAppBarDefaults
 import ui.tabs.categories.CategoriesContent
 import ui.tabs.headlines.HeadlinesContent
 import ui.tabs.sources.SourcesContent
@@ -38,6 +45,7 @@ fun RootContent(
     modifier: Modifier = Modifier
 ) {
     val stack = component.tabsStack.subscribeAsState()
+    val state = component.state.subscribeAsState()
 
     MaterialTheme {
         Box(
@@ -47,6 +55,25 @@ fun RootContent(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
         ) {
             Scaffold(
+                topBar = {
+                    CenterAlignedTopAppBar(
+                        colors = TopAppBarDefaults.colors(),
+                        title = {
+                            Text(
+                                text = state.value.title,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
+                        navigationIcon = {
+                            IconButton(
+                                onClick = { }
+                            ) {
+                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "back")
+                            }
+                        }
+                    )
+                },
                 bottomBar = {
                     BottomNavigation(
                     ) {
@@ -56,7 +83,9 @@ fun RootContent(
                                 label = { Text(text = GetTabTitleByKey(it.key)) },
                                 alwaysShowLabel = false,
                                 onClick = { component.tabsNavigation.bringToFront(it.type) },
-                                selected = stack.value.active.configuration == it.type
+                                selected = stack.value.active.configuration == it.type,
+                                selectedContentColor = Color.White,
+                                unselectedContentColor = Color.White.copy(alpha = ContentAlpha.medium)
                             )
                         }
                     }

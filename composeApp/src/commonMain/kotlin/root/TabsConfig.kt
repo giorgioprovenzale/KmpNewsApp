@@ -74,7 +74,7 @@ fun newspaper(): ImageVector = ImageVector.Builder(
     viewportHeight = 40.0f
 ).apply {
     path(
-        fill = SolidColor(Color.Black),
+        fill = SolidColor(Color.White),
         fillAlpha = 1f,
         stroke = null,
         strokeAlpha = 1f,
@@ -164,7 +164,7 @@ fun category(): ImageVector = ImageVector.Builder(
     viewportHeight = 40.0f
 ).apply {
     path(
-        fill = SolidColor(Color.Black),
+        fill = SolidColor(Color.White),
         fillAlpha = 1f,
         stroke = null,
         strokeAlpha = 1f,
@@ -243,7 +243,7 @@ fun sources(): ImageVector = ImageVector.Builder(
     viewportHeight = 40.0f
 ).apply {
     path(
-        fill = SolidColor(Color.Black),
+        fill = SolidColor(Color.White),
         fillAlpha = 1f,
         stroke = null,
         strokeAlpha = 1f,
