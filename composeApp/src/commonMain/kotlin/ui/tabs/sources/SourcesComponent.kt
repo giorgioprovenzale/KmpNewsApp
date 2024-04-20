@@ -18,7 +18,7 @@ class SourcesComponent(
     private val onConfigChange: (NavConfig) -> Unit,
 ) : ComponentContext by componentContext {
 
-    private var sourcesNavigation: StackNavigation<NavConfig.SourcesConfig> = StackNavigation()
+    var sourcesNavigation: StackNavigation<NavConfig.SourcesConfig> = StackNavigation()
     var sourcesStack: Value<ChildStack<NavConfig.SourcesConfig, NavChild.SourcesChild>> = childStack(
         source = sourcesNavigation,
         serializer = NavConfig.SourcesConfig.serializer(),

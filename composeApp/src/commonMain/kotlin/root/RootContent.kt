@@ -63,7 +63,7 @@ fun RootContent(
                         },
                         navigationIcon = if (state.value.showBack) {
                             @Composable {
-                                IconButton(onClick = { }) {
+                                IconButton(onClick = { component.onBackClicked() }) {
                                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "back")
                                 }
                             }

@@ -17,7 +17,7 @@ class HeadlinesComponent(
     private val onConfigChange: (NavConfig) -> Unit,
 ) : ComponentContext by componentContext {
 
-    private var headlinesNavigation: StackNavigation<NavConfig.HeadlinesConfig> = StackNavigation()
+    var headlinesNavigation: StackNavigation<NavConfig.HeadlinesConfig> = StackNavigation()
     var headlinesStack: Value<ChildStack<NavConfig.HeadlinesConfig, NavChild.HeadlinesChild>> = childStack(
         source = headlinesNavigation,
         serializer = NavConfig.HeadlinesConfig.serializer(),
