@@ -28,9 +28,10 @@ import theme.spacing_2x
 fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
     Card(
         shape = RoundedCornerShape(15.dp),
-        modifier = Modifier.padding(spacing_1x).fillMaxWidth().clickable {
-            onItemClicked(article)
-        },
+        modifier = Modifier.padding(spacing_1x).fillMaxWidth()
+            .clickable {
+                onItemClicked(article)
+            },
         elevation = 2.dp
     ) {
         Column(

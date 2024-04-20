@@ -16,6 +16,7 @@ import com.seiko.imageloader.intercept.painterMemoryCache
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import okio.Path.Companion.toPath
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import platform.Foundation.NSCachesDirectory
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSUserDomainMask
@@ -23,6 +24,7 @@ import root.RootComponent
 import root.RootContent
 
 @ExperimentalDecomposeApi
+@ExperimentalResourceApi
 fun MainViewController() = ComposeUIViewController {
     Napier.base(DebugAntilog())
 
