@@ -20,6 +20,8 @@ class RootComponent(
     private val _state = MutableValue(RootState(title = ""))
     val state: Value<RootState> = _state
 
+    private val currentConfigByTabMap = HashMap<TabsConfig, NavConfig>()
+
     var tabsNavigation: StackNavigation<TabsConfig> = StackNavigation()
     var tabsStack: Value<ChildStack<TabsConfig, TabsChild>> = childStack(
         source = tabsNavigation,
@@ -30,14 +32,24 @@ class RootComponent(
         key = "tabs"
     )
 
+    init {
+        tabsStack.observe {
+            updateStateByNestedConfig(currentConfigByTabMap[it.active.configuration])
+        }
+    }
+
     private fun tabsChildFactory(config: TabsConfig, componentContext: ComponentContext): TabsChild {
         return when (config) {
             is TabsConfig.HeadlinesTabConfig -> TabsChild.Headlines(
-                HeadlinesComponent(componentContext, ::onConfigChange)
+                HeadlinesComponent(componentContext) {
+                    onConfigChange(TabsConfig.HeadlinesTabConfig, it)
+                }
             )
 
             is TabsConfig.SourcesTabConfig -> TabsChild.SourcesList(
-                SourcesComponent(componentContext, ::onConfigChange)
+                SourcesComponent(componentContext) {
+                    onConfigChange(TabsConfig.SourcesTabConfig, it)
+                }
             )
 
             TabsConfig.CategoriesTabConfig -> TabsChild.CategoriesList(
@@ -46,13 +58,20 @@ class RootComponent(
         }
     }
 
-    private fun onConfigChange(navConfig: NavConfig) {
-        when (navConfig) {
-            is NavConfig.HeadlinesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty()) }
-            NavConfig.HeadlinesConfig.ArticlesListConfig -> _state.update { it.copy(title = "Home") }
-            is NavConfig.SourcesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty()) }
-            is NavConfig.SourcesConfig.ArticlesListConfig -> _state.update { it.copy(title = navConfig.source.name) }
-            NavConfig.SourcesConfig.SourcesListConfig -> _state.update { it.copy(title = "Sources") }
+    private fun onConfigChange(tabsConfig: TabsConfig, navConfig: NavConfig) {
+        currentConfigByTabMap[tabsConfig] = navConfig
+        updateStateByNestedConfig(navConfig)
+    }
+
+    private fun updateStateByNestedConfig(navConfig: NavConfig?) {
+        navConfig?.let {
+            when (navConfig) {
+                is NavConfig.HeadlinesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty()) }
+                NavConfig.HeadlinesConfig.ArticlesListConfig -> _state.update { it.copy(title = "Home") }
+                is NavConfig.SourcesConfig.ArticleDetailsConfig -> _state.update { it.copy(title = navConfig.article.title.orEmpty()) }
+                is NavConfig.SourcesConfig.ArticlesListConfig -> _state.update { it.copy(title = navConfig.source.name) }
+                NavConfig.SourcesConfig.SourcesListConfig -> _state.update { it.copy(title = "Sources") }
+            }
         }
     }
 }
