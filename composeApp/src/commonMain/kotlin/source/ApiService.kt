@@ -1,5 +1,6 @@
 package source
 
+import domain.models.Category
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -23,6 +24,13 @@ class ApiService constructor(private val httpClient: HttpClient) {
     suspend fun getHeadlinesBySource(sourceId: String): NewsResponse = httpClient.get("top-headlines") {
         url {
             parameters.append("sources", sourceId)
+        }
+    }.body<NewsResponse>()
+
+    suspend fun getHeadlinesByCategory(category: String): NewsResponse = httpClient.get("top-headlines") {
+        url {
+            parameters.append("category", category)
+            parameters.append("country", "us")
         }
     }.body<NewsResponse>()
 

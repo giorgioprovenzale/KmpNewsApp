@@ -9,6 +9,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import kmpnewsapp.composeapp.generated.resources.Res
+import kmpnewsapp.composeapp.generated.resources.categories
 import kmpnewsapp.composeapp.generated.resources.home
 import kmpnewsapp.composeapp.generated.resources.sources
 import kotlinx.coroutines.CoroutineScope
@@ -69,9 +70,13 @@ class RootComponent(
                 TabsChild.SourcesList(component)
             }
 
-            TabsConfig.CategoriesTabConfig -> TabsChild.CategoriesList(
-                CategoriesComponent(componentContext)
-            )
+            TabsConfig.CategoriesTabConfig -> {
+                val component = CategoriesComponent(componentContext) {
+                    onConfigChange(TabsConfig.CategoriesTabConfig, it)
+                }
+                navigationByTabMap[config] = component.categoriesNavigation
+                TabsChild.CategoriesList(component)
+            }
         }
     }
 
@@ -115,6 +120,27 @@ class RootComponent(
                     NavConfig.SourcesConfig.SourcesListConfig -> _state.update {
                         it.copy(
                             title = getString(Res.string.sources),
+                            showBack = false
+                        )
+                    }
+
+                    is NavConfig.CategoriesConfig.ArticleDetailsConfig -> _state.update {
+                        it.copy(
+                            title = navConfig.article.title.orEmpty(),
+                            showBack = true
+                        )
+                    }
+
+                    is NavConfig.CategoriesConfig.ArticlesListConfig -> _state.update {
+                        it.copy(
+                            title = navConfig.category.name,
+                            showBack = true
+                        )
+                    }
+
+                    NavConfig.CategoriesConfig.CategoriesListConfig -> _state.update {
+                        it.copy(
+                            title = getString(Res.string.categories),
                             showBack = false
                         )
                     }

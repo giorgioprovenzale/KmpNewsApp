@@ -1,6 +1,8 @@
 package di
 
 import com.jpmobilelab.kmp.newsapp.BuildKonfig
+import domain.interactors.GetCategoriesInteractor
+import domain.interactors.GetHeadlinesArticlesByCategoryInteractor
 import domain.interactors.GetHeadlinesArticlesBySourceInteractor
 import domain.interactors.GetHeadlinesArticlesInteractor
 import domain.interactors.GetSourcesInteractor
@@ -50,5 +52,11 @@ fun networkModule() = module {
     }
     single {
         GetHeadlinesArticlesBySourceInteractor(apiService = get())
+    }
+    single {
+        GetCategoriesInteractor()
+    }
+    single {
+        GetHeadlinesArticlesByCategoryInteractor(apiService = get())
     }
 }
