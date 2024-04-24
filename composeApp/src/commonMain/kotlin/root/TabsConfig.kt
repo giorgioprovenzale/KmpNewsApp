@@ -12,8 +12,12 @@ import androidx.compose.ui.unit.dp
 import kmpnewsapp.composeapp.generated.resources.Res
 import kmpnewsapp.composeapp.generated.resources.categories
 import kmpnewsapp.composeapp.generated.resources.home
+import kmpnewsapp.composeapp.generated.resources.ic_categories_24
+import kmpnewsapp.composeapp.generated.resources.ic_news_24p
+import kmpnewsapp.composeapp.generated.resources.ic_sources_24
 import kmpnewsapp.composeapp.generated.resources.sources
 import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
@@ -34,26 +38,28 @@ enum class TabKey {
     Home, Sources, Categories
 }
 
+@ExperimentalResourceApi
 data class TabItem(
     val type: TabsConfig,
-    val icon: ImageVector,
+    val icon: DrawableResource,
     val key: TabKey,
 )
 
+@ExperimentalResourceApi
 fun tabItems() = listOf(
     TabItem(
         type = TabsConfig.HeadlinesTabConfig,
-        icon = newspaper(),
+        icon = Res.drawable.ic_news_24p,
         key = TabKey.Home,
     ),
     TabItem(
         type = TabsConfig.SourcesTabConfig,
-        icon = sources(),
+        icon = Res.drawable.ic_sources_24,
         key = TabKey.Sources,
     ),
     TabItem(
         type = TabsConfig.CategoriesTabConfig,
-        icon = category(),
+        icon = Res.drawable.ic_categories_24,
         key = TabKey.Categories,
     )
 )

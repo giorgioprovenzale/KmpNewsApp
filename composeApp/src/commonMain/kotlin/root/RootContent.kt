@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -16,7 +17,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,7 +31,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.stack.bringToFront
 import extensions.capitalized
 import kmpnewsapp.composeapp.generated.resources.Res
-import kmpnewsapp.composeapp.generated.resources.ic_arrow_back_24px
+import kmpnewsapp.composeapp.generated.resources.ic_arrow_back_24
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.vectorResource
 import theme.AppTheme
@@ -70,7 +70,7 @@ fun RootContent(
                             if (state.value.showBack) {
                                 IconButton(onClick = { component.onBackClicked() }) {
                                     Icon(
-                                        imageVector = vectorResource(Res.drawable.ic_arrow_back_24px),
+                                        imageVector = vectorResource(Res.drawable.ic_arrow_back_24),
                                         contentDescription = "back",
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
@@ -91,7 +91,7 @@ fun RootContent(
                             NavigationBarItem(
                                 icon = {
                                     Icon(
-                                        it.icon,
+                                        vectorResource(it.icon),
                                         contentDescription = GetTabTitleByKey(it.key),
                                         tint = if (stack.value.active.configuration == it.type)
                                             MaterialTheme.colorScheme.primary
@@ -100,7 +100,6 @@ fun RootContent(
                                     )
                                 },
                                 label = { Text(text = GetTabTitleByKey(it.key).capitalized()) },
-                                alwaysShowLabel = false,
                                 onClick = { component.tabsNavigation.bringToFront(it.type) },
                                 selected = stack.value.active.configuration == it.type,
                                 colors = NavigationBarItemDefaults.colors().copy(
@@ -114,7 +113,7 @@ fun RootContent(
                 }
             ) {
                 Box(
-                    modifier = Modifier.fillMaxSize().background(Color.LightGray)
+                    modifier = Modifier.padding(it).fillMaxSize().background(Color.LightGray)
                 ) {
                     Children(
                         stack = stack.value,
