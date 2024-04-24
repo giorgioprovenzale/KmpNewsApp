@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -54,7 +54,7 @@ fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
                 Text(
                     article.title.orEmpty(),
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.headlineMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(all = spacing_2x)
