@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextOverflow
+import extensions.capitalized
 import getPlatform
 import isAndroid
 import kmpnewsapp.composeapp.generated.resources.Res
@@ -52,7 +53,7 @@ fun CenteredTopBar(
 private fun TopBarTitle(
     title: String
 ) = Text(
-    text = title,
+    text = title.capitalized(),
     maxLines = 1,
     overflow = TextOverflow.Ellipsis,
 )
