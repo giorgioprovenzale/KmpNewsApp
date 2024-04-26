@@ -1,5 +1,6 @@
 package root
 
+import TabsConfig
 import androidx.compose.runtime.Composable
 import kmpnewsapp.composeapp.generated.resources.Res
 import kmpnewsapp.composeapp.generated.resources.categories
@@ -8,23 +9,9 @@ import kmpnewsapp.composeapp.generated.resources.ic_categories_24
 import kmpnewsapp.composeapp.generated.resources.ic_news_24p
 import kmpnewsapp.composeapp.generated.resources.ic_sources_24
 import kmpnewsapp.composeapp.generated.resources.sources
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-
-@Serializable
-sealed class TabsConfig {
-
-    @Serializable
-    data object HeadlinesTabConfig : TabsConfig()
-
-    @Serializable
-    data object SourcesTabConfig : TabsConfig()
-
-    @Serializable
-    data object CategoriesTabConfig : TabsConfig()
-}
 
 enum class TabKey {
     Home, Sources, Categories

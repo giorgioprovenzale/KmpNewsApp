@@ -1,6 +1,8 @@
 package root
 
 import NavConfig
+import TabsChild
+import TabsConfig
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation

@@ -3,6 +3,18 @@ import domain.models.Category
 import domain.models.Source
 import kotlinx.serialization.Serializable
 
+@Serializable
+sealed class TabsConfig {
+
+    @Serializable
+    data object HeadlinesTabConfig : TabsConfig()
+
+    @Serializable
+    data object SourcesTabConfig : TabsConfig()
+
+    @Serializable
+    data object CategoriesTabConfig : TabsConfig()
+}
 sealed interface NavConfig {
 
     @Serializable
