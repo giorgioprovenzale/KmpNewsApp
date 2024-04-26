@@ -94,9 +94,9 @@ fun TabsContent(
                 )
             }
         }
-    }) { it ->
+    }) { paddings ->
         Box(
-            modifier = Modifier.padding(it).fillMaxSize().background(Color.LightGray)
+            modifier = Modifier.padding(paddings).fillMaxSize().background(Color.LightGray)
         ) {
             Children(
                 stack = stack.value, animation = stackAnimation(fade())

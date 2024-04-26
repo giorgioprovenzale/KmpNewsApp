@@ -10,7 +10,6 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import domain.models.Article
-import ui.articles.details.ArticleDetailsComponent
 import ui.articles.list.ArticlesListComponent
 import ui.categories.CategoriesListComponent
 
