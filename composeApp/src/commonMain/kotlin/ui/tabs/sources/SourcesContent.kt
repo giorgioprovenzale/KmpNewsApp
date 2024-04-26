@@ -21,7 +21,6 @@ fun SourcesContent(
         animation = stackAnimation(fade())
     ) {
         when (val child = it.instance) {
-            is NavChild.SourcesChild.ArticleDetails -> ArticleDetailsContent(child.component)
             is NavChild.SourcesChild.ArticlesList -> ArticlesListContent(child.component)
             is NavChild.SourcesChild.SourcesList -> SourcesListContent(child.component)
         }

@@ -1,4 +1,4 @@
-package root
+package ui.tabs
 
 import TabsConfig
 import androidx.compose.runtime.Composable

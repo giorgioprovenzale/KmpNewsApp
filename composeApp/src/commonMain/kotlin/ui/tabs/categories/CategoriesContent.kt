@@ -6,7 +6,6 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import ui.articles.details.ArticleDetailsContent
 import ui.articles.list.ArticlesListContent
 import ui.categories.CategoriesListContent
 
@@ -21,7 +20,6 @@ fun CategoriesContent(
         animation = stackAnimation(fade())
     ) {
         when (val child = it.instance) {
-            is NavChild.CategoriesChild.ArticleDetails -> ArticleDetailsContent(child.component)
             is NavChild.CategoriesChild.ArticlesList -> ArticlesListContent(child.component)
             is NavChild.CategoriesChild.CategoriesList -> CategoriesListContent(child.component)
         }

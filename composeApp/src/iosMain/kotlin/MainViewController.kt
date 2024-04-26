@@ -1,18 +1,15 @@
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.seiko.imageloader.ImageLoader
 import com.seiko.imageloader.LocalImageLoader
-import com.seiko.imageloader.cache.memory.MemoryCache
 import com.seiko.imageloader.component.setupDefaultComponents
 import com.seiko.imageloader.defaultImageResultMemoryCache
 import com.seiko.imageloader.intercept.bitmapMemoryCacheConfig
-import com.seiko.imageloader.intercept.imageMemoryCache
-import com.seiko.imageloader.intercept.painterMemoryCache
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import okio.Path.Companion.toPath
@@ -24,6 +21,7 @@ import root.RootComponent
 import root.RootContent
 
 @ExperimentalDecomposeApi
+@ExperimentalMaterial3Api
 @ExperimentalResourceApi
 fun MainViewController() = ComposeUIViewController {
     Napier.base(DebugAntilog())
@@ -37,7 +35,7 @@ fun MainViewController() = ComposeUIViewController {
     CompositionLocalProvider(
         LocalImageLoader provides remember { generateImageLoader() },
     ) {
-        RootContent(rootComponent, modifier = Modifier)
+        RootContent(rootComponent)
     }
 }
 

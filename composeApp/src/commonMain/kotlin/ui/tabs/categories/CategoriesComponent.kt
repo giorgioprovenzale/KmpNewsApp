@@ -9,6 +9,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import domain.models.Article
 import ui.articles.details.ArticleDetailsComponent
 import ui.articles.list.ArticlesListComponent
 import ui.categories.CategoriesListComponent
@@ -16,7 +17,8 @@ import ui.categories.CategoriesListComponent
 class CategoriesComponent(
     private val componentContext: ComponentContext,
     private val onConfigChange: (NavConfig) -> Unit,
-) : ComponentContext by componentContext {
+    private val onArticleSelected: ((Article) -> Unit),
+    ) : ComponentContext by componentContext {
 
     var categoriesNavigation: StackNavigation<NavConfig.CategoriesConfig> = StackNavigation()
     var categoriesStack: Value<ChildStack<NavConfig.CategoriesConfig, NavChild.CategoriesChild>> = childStack(
@@ -36,20 +38,11 @@ class CategoriesComponent(
 
     private fun categoriesChildFactory(config: NavConfig.CategoriesConfig, componentContext: ComponentContext): NavChild.CategoriesChild {
         return when (config) {
-
-            is NavConfig.CategoriesConfig.ArticleDetailsConfig -> NavChild.CategoriesChild.ArticleDetails(
-                ArticleDetailsComponent(
-                    componentContext,
-                    config.article
-                ) {
-                    categoriesNavigation.pop()
-                })
-
             is NavConfig.CategoriesConfig.ArticlesListConfig -> NavChild.CategoriesChild.ArticlesList(
                 ArticlesListComponent(
                     componentContext,
                     category = config.category,
-                    onArticleSelected = { categoriesNavigation.push(NavConfig.CategoriesConfig.ArticleDetailsConfig(it)) },
+                    onArticleSelected = onArticleSelected,
                     onBack = { categoriesNavigation.pop() }
                 ))
 

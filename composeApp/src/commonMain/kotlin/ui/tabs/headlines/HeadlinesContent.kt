@@ -7,7 +7,6 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import ui.articles.details.ArticleDetailsContent
 import ui.articles.list.ArticlesListContent
 
 @ExperimentalDecomposeApi
@@ -22,7 +21,6 @@ fun HeadlinesContent(
         animation = stackAnimation(fade())
     ) {
         when (val child = it.instance) {
-            is NavChild.HeadlinesChild.ArticleDetails -> ArticleDetailsContent(child.component)
             is NavChild.HeadlinesChild.ArticlesList -> ArticlesListContent(child.component)
         }
     }

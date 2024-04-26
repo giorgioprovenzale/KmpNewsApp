@@ -4,6 +4,16 @@ import domain.models.Source
 import kotlinx.serialization.Serializable
 
 @Serializable
+sealed class TabsToArticleConfig {
+
+    @Serializable
+    data object TabsConfig : TabsToArticleConfig()
+
+    @Serializable
+    data class ArticleConfig(val article: Article) : TabsToArticleConfig()
+}
+
+@Serializable
 sealed class TabsConfig {
 
     @Serializable
@@ -15,6 +25,7 @@ sealed class TabsConfig {
     @Serializable
     data object CategoriesTabConfig : TabsConfig()
 }
+
 sealed interface NavConfig {
 
     @Serializable
@@ -22,9 +33,6 @@ sealed interface NavConfig {
 
         @Serializable
         data object ArticlesListConfig : HeadlinesConfig()
-
-        @Serializable
-        data class ArticleDetailsConfig(val article: Article) : HeadlinesConfig()
     }
 
     @Serializable
@@ -35,9 +43,6 @@ sealed interface NavConfig {
 
         @Serializable
         data class ArticlesListConfig(val source: Source) : SourcesConfig()
-
-        @Serializable
-        data class ArticleDetailsConfig(val article: Article) : SourcesConfig()
     }
 
     @Serializable
@@ -48,8 +53,5 @@ sealed interface NavConfig {
 
         @Serializable
         data class ArticlesListConfig(val category: Category) : CategoriesConfig()
-
-        @Serializable
-        data class ArticleDetailsConfig(val article: Article) : CategoriesConfig()
     }
 }
