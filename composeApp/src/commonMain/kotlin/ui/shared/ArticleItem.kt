@@ -54,7 +54,7 @@ fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
                     article.title.orEmpty(),
                     textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.headlineSmall,
-                    maxLines = 3,
+                    maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(all = spacing_2x)
                 )
