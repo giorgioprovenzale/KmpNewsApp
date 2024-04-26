@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +46,7 @@ fun ArticleDetails(article: Article) {
             Text(
                 text = article.title.orEmpty(),
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.headlineMedium,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(all = spacing_2x)
@@ -54,13 +54,13 @@ fun ArticleDetails(article: Article) {
             Text(
                 text = article.description.orEmpty(),
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(all = spacing_2x)
             )
             Text(
                 text = article.content.orEmpty(),
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(all = spacing_2x)
             )
             Spacer(modifier = Modifier.height(100.dp))

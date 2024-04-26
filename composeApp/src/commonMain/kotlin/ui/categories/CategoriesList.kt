@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +46,6 @@ fun CategoryItem(category: Category, onItemClicked: (Category) -> Unit) {
         modifier = Modifier.padding(spacing_1x).fillMaxWidth().clickable {
             onItemClicked(category)
         },
-        elevation = 2.dp
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -55,7 +54,7 @@ fun CategoryItem(category: Category, onItemClicked: (Category) -> Unit) {
             Text(
                 category.name.capitalized(),
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.headlineMedium,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(all = spacing_2x)
