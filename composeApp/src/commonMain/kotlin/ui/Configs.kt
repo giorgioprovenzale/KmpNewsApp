@@ -3,7 +3,6 @@ package ui
 import domain.models.Article
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 sealed interface HomeTabConfigs {
 

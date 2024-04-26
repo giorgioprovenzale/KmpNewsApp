@@ -17,7 +17,7 @@ class CategoriesComponent(
     private val componentContext: ComponentContext,
     private val onConfigChange: (NavConfig) -> Unit,
     private val onArticleSelected: ((Article) -> Unit),
-    ) : ComponentContext by componentContext {
+) : ComponentContext by componentContext {
 
     var categoriesNavigation: StackNavigation<NavConfig.CategoriesConfig> = StackNavigation()
     var categoriesStack: Value<ChildStack<NavConfig.CategoriesConfig, NavChild.CategoriesChild>> = childStack(

@@ -111,6 +111,7 @@ class TabsComponent(
                             showBack = false
                         )
                     }
+
                     is NavConfig.SourcesConfig.ArticlesListConfig -> _state.update {
                         it.copy(
                             title = navConfig.source.name,

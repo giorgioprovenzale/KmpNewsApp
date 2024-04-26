@@ -6,7 +6,6 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import ui.articles.details.ArticleDetailsContent
 import ui.articles.list.ArticlesListContent
 import ui.sources.SourcesListContent
 
