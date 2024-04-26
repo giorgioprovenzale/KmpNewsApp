@@ -19,7 +19,7 @@ class RootComponent(
     private val componentContext: ComponentContext,
 ) : KoinComponent, ComponentContext by componentContext {
 
-    var tabsToArticleNavigation: StackNavigation<TabsToArticleConfig> = StackNavigation()
+    private var tabsToArticleNavigation: StackNavigation<TabsToArticleConfig> = StackNavigation()
     var tabsToArticleStack: Value<ChildStack<TabsToArticleConfig, TabsToArticleChild>> = childStack(
         source = tabsToArticleNavigation,
         serializer = TabsToArticleConfig.serializer(),
