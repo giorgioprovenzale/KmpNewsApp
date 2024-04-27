@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
@@ -34,7 +33,7 @@ fun RootContent(
     AppTheme(
         useDarkTheme = useDarkTheme
     ) {
-        Surface(tonalElevation = 5.dp) {
+        Surface {
             Children(
                 stack = stack.value, animation = stackAnimation(fade() + scale())
             ) { activeStackItem ->
