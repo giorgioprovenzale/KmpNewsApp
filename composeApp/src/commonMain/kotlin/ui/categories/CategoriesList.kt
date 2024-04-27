@@ -3,7 +3,6 @@ package ui.categories
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,10 +23,13 @@ import theme.spacing_1x
 import theme.spacing_2x
 
 @Composable
-fun CategoriesList(categories: List<Category>, onItemClicked: (Category) -> Unit) {
+fun CategoriesList(
+    categories: List<Category>,
+    onItemClicked: (Category) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 64.dp)
+        modifier = modifier.fillMaxWidth(),
     ) {
 
         items(categories) { category ->
@@ -40,10 +42,13 @@ fun CategoriesList(categories: List<Category>, onItemClicked: (Category) -> Unit
 }
 
 @Composable
-fun CategoryItem(category: Category, onItemClicked: (Category) -> Unit) {
+fun CategoryItem(
+    category: Category,
+    onItemClicked: (Category) -> Unit,
+    modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(15.dp),
-        modifier = Modifier.padding(spacing_1x).fillMaxWidth().clickable {
+        modifier = modifier.padding(spacing_1x).fillMaxWidth().clickable {
             onItemClicked(category)
         },
     ) {

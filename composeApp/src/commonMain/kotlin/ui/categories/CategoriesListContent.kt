@@ -12,11 +12,7 @@ fun CategoriesListContent(
 ) {
     val state = component.state.subscribeAsState()
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        CategoriesList(
-            categories = state.value.categories,
-            onItemClicked = { component.onItemClicked(it) })
-    }
+    CategoriesList(
+        categories = state.value.categories,
+        onItemClicked = { component.onItemClicked(it) })
 }

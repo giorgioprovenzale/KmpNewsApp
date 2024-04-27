@@ -13,11 +13,7 @@ fun ArticlesListContent(
 ) {
     val state = component.state.subscribeAsState()
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        ArticlesList(
-            articles = state.value.articles,
-            onItemClicked = { component.onItemClicked(it) })
-    }
+    ArticlesList(
+        articles = state.value.articles,
+        onItemClicked = { component.onItemClicked(it) })
 }

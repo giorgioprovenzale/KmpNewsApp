@@ -23,9 +23,12 @@ import domain.models.Article
 import theme.spacing_2x
 
 @Composable
-fun ArticleDetails(article: Article) {
+fun ArticleDetails(
+    article: Article,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()),
+        modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

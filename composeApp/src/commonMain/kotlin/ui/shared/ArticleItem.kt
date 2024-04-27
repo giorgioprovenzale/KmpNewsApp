@@ -3,7 +3,6 @@ package ui.shared
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,10 +24,14 @@ import theme.spacing_1x
 import theme.spacing_2x
 
 @Composable
-fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
+fun ArticleItem(
+    article: Article,
+    modifier: Modifier = Modifier,
+    onItemClicked: (Article) -> Unit
+) {
     Card(
         shape = RoundedCornerShape(15.dp),
-        modifier = Modifier.padding(spacing_1x).fillMaxWidth()
+        modifier = modifier.padding(spacing_1x).fillMaxWidth()
             .clickable {
                 onItemClicked(article)
             },
@@ -38,27 +41,21 @@ fun ArticleItem(article: Article, onItemClicked: (Article) -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             article.urlToImage?.let {
-                val painter = rememberImagePainter(url = it)
                 Image(
-                    painter,
+                    painter = rememberImagePainter(url = it),
                     modifier = Modifier.fillMaxWidth().height(200.dp),
                     contentDescription = article.title,
                     contentScale = ContentScale.Crop
                 )
             }
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    article.title.orEmpty(),
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.headlineSmall,
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(all = spacing_2x)
-                )
-            }
+            Text(
+                text = article.title.orEmpty(),
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.headlineSmall,
+                maxLines = 4,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(all = spacing_2x)
+            )
         }
     }
 }

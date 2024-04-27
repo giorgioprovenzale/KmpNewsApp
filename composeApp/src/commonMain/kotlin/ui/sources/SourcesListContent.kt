@@ -12,11 +12,7 @@ fun SourcesListContent(
 ) {
     val state = component.state.subscribeAsState()
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        SourcesList(
-            sources = state.value.sources,
-            onItemClicked = { component.onItemClicked(it) })
-    }
+    SourcesList(
+        sources = state.value.sources,
+        onItemClicked = { component.onItemClicked(it) })
 }
