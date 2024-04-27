@@ -24,7 +24,7 @@ fun ArticleDetailsContent(
 
     Scaffold(topBar = {
         TopBar(
-            title = article.title.orEmpty(),
+            title = "",
             showBack = true,
             useDarkTheme = useDarkTheme,
             onThemeChangeClicked = { onThemeChange() },

@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
 import domain.models.Article
@@ -32,6 +31,12 @@ fun ArticleDetails(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Text(
+            text = article.title.orEmpty(),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(all = spacing_2x)
+        )
         article.urlToImage?.let {
             val painter = rememberImagePainter(url = it)
             Image(
@@ -42,31 +47,18 @@ fun ArticleDetails(
                 alignment = Alignment.TopStart
             )
         }
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = article.title.orEmpty(),
-                textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.headlineMedium,
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(all = spacing_2x)
-            )
-            Text(
-                text = article.description.orEmpty(),
-                textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(all = spacing_2x)
-            )
-            Text(
-                text = article.content.orEmpty(),
-                textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(all = spacing_2x)
-            )
-            Spacer(modifier = Modifier.height(100.dp))
-        }
+        Text(
+            text = article.description.orEmpty(),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(all = spacing_2x)
+        )
+        Text(
+            text = article.content.orEmpty(),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(all = spacing_2x)
+        )
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }
