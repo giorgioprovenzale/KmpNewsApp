@@ -23,7 +23,7 @@ class ArticlesListComponent(
 
     private val articlesRepository: ArticlesRepository by inject()
 
-    private val _state = MutableValue(ArticlesState(articles = emptyList(), topBarTitle = null, showBackButton = source != null))
+    private val _state = MutableValue(ArticlesState(articles = emptyList()))
     val state: Value<ArticlesState> = _state
 
     private val handler = CoroutineExceptionHandler { _, exception ->
@@ -38,17 +38,11 @@ class ArticlesListComponent(
                 else -> articlesRepository.getHeadlines()
             }
             _state.value =
-                ArticlesState(articles = articles, topBarTitle = getTopBarTitle(), showBackButton = source != null || category != null)
+                ArticlesState(articles = articles)
         }
     }
 
     fun onItemClicked(item: Article) {
         onArticleSelected?.invoke(item)
-    }
-
-    private fun getTopBarTitle(): String = when {
-        source != null -> source.name
-        category != null -> category.name
-        else -> "Home"
     }
 }
