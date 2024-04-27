@@ -19,8 +19,6 @@ class ArticlesListComponent(
     private val source: Source? = null,
     private val category: Category? = null,
     private val onArticleSelected: ((Article) -> Unit)? = null,
-    private val onCategorySelected: ((Category) -> Unit)? = null,
-    private val onBack: () -> Unit,
 ) : KoinComponent, ComponentContext by componentContext {
 
     private val articlesRepository: ArticlesRepository by inject()
@@ -46,14 +44,6 @@ class ArticlesListComponent(
 
     fun onItemClicked(item: Article) {
         onArticleSelected?.invoke(item)
-    }
-
-    fun onItemClicked(item: Category) {
-        onCategorySelected?.invoke(item)
-    }
-
-    fun onBackClicked() {
-        onBack()
     }
 
     private fun getTopBarTitle(): String = when {

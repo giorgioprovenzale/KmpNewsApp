@@ -39,7 +39,6 @@ class HeadlinesComponent(
                 NavChild.HeadlinesChild.ArticlesList(ArticlesListComponent(
                     componentContext = componentContext,
                     onArticleSelected = onArticleSelected,
-                    onBack = { headlinesNavigation.pop() }
                 ))
         }
     }

@@ -42,7 +42,6 @@ class SourcesComponent(
                     componentContext,
                     source = config.source,
                     onArticleSelected = onArticleSelected,
-                    onBack = { sourcesNavigation.pop() }
                 ))
 
             NavConfig.SourcesConfig.SourcesListConfig -> NavChild.SourcesChild.SourcesList(SourcesListComponent(componentContext) {

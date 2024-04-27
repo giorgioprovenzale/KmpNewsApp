@@ -42,7 +42,6 @@ class CategoriesComponent(
                     componentContext,
                     category = config.category,
                     onArticleSelected = onArticleSelected,
-                    onBack = { categoriesNavigation.pop() }
                 ))
 
             NavConfig.CategoriesConfig.CategoriesListConfig -> NavChild.CategoriesChild.CategoriesList(
