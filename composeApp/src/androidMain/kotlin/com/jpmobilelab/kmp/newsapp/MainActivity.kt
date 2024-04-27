@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -22,9 +23,12 @@ import com.seiko.imageloader.component.setupDefaultComponents
 import com.seiko.imageloader.defaultImageResultMemoryCache
 import com.seiko.imageloader.option.androidContext
 import okio.Path.Companion.toOkioPath
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import root.RootComponent
 import root.RootContent
 
+@ExperimentalMaterial3Api
+@ExperimentalResourceApi
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +53,7 @@ class MainActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalImageLoader provides remember { generateImageLoader() },
             ) {
-                RootContent(rootComponent, modifier = Modifier)
+                RootContent(rootComponent)
             }
         }
     }

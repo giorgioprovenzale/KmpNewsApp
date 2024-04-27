@@ -9,13 +9,14 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import ui.articles.details.ArticleDetailsComponent
+import domain.models.Article
 import ui.articles.list.ArticlesListComponent
 import ui.sources.SourcesListComponent
 
 class SourcesComponent(
     private val componentContext: ComponentContext,
     private val onConfigChange: (NavConfig) -> Unit,
+    private val onArticleSelected: ((Article) -> Unit),
 ) : ComponentContext by componentContext {
 
     var sourcesNavigation: StackNavigation<NavConfig.SourcesConfig> = StackNavigation()
@@ -36,20 +37,11 @@ class SourcesComponent(
 
     private fun sourcesChildFactory(config: NavConfig.SourcesConfig, componentContext: ComponentContext): NavChild.SourcesChild {
         return when (config) {
-
-            is NavConfig.SourcesConfig.ArticleDetailsConfig -> NavChild.SourcesChild.ArticleDetails(
-                ArticleDetailsComponent(
-                    componentContext,
-                    config.article
-                ) {
-                    sourcesNavigation.pop()
-                })
-
             is NavConfig.SourcesConfig.ArticlesListConfig -> NavChild.SourcesChild.ArticlesList(
                 ArticlesListComponent(
                     componentContext,
                     source = config.source,
-                    onArticleSelected = { sourcesNavigation.push(NavConfig.SourcesConfig.ArticleDetailsConfig(it)) },
+                    onArticleSelected = onArticleSelected,
                     onBack = { sourcesNavigation.pop() }
                 ))
 

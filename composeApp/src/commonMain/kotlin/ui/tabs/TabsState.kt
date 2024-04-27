@@ -1,6 +1,6 @@
-package root
+package ui.tabs
 
-data class RootState(
+data class TabsState(
     val title: String,
     val showBack: Boolean,
 )
