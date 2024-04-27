@@ -4,6 +4,10 @@ import TabsToArticleChild
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
@@ -25,17 +29,29 @@ fun RootContent(
     component: RootComponent,
 ) {
     val stack = component.tabsToArticleStack.subscribeAsState()
+    var useDarkTheme by remember { mutableStateOf(false) }
 
-    AppTheme {
+    AppTheme(
+        useDarkTheme = useDarkTheme
+    ) {
         Surface(tonalElevation = 5.dp) {
             Children(
                 stack = stack.value, animation = stackAnimation(fade() + scale())
             ) { activeStackItem ->
                 when (val child = activeStackItem.instance) {
-                    is TabsToArticleChild.ArticleDetails -> ArticleDetailsContent(child.component)
+                    is TabsToArticleChild.ArticleDetails -> ArticleDetailsContent(
+                        component = child.component,
+                        useDarkTheme = useDarkTheme
+                    ) {
+                        useDarkTheme = !useDarkTheme
+                    }
+
                     is TabsToArticleChild.Tabs -> TabsContent(
-                        component = child.component
-                    )
+                        component = child.component,
+                        useDarkTheme = useDarkTheme
+                    ) {
+                        useDarkTheme = !useDarkTheme
+                    }
                 }
             }
         }

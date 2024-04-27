@@ -14,7 +14,9 @@ import ui.shared.TopBar
 @ExperimentalResourceApi
 @Composable
 fun ArticleDetailsContent(
-    component: ArticleDetailsComponent
+    component: ArticleDetailsComponent,
+    useDarkTheme: Boolean,
+    onThemeChange: () -> Unit
 ) {
 
     val state = component.state.subscribeAsState()
@@ -24,7 +26,9 @@ fun ArticleDetailsContent(
         TopBar(
             title = article.title.orEmpty(),
             showBack = true,
-            onBackClicked = { component.onBackClicked() }
+            useDarkTheme = useDarkTheme,
+            onThemeChangeClicked = { onThemeChange() },
+            onBackClicked = { component.onBackClicked() },
         )
     }) { paddings ->
         ArticleDetails(

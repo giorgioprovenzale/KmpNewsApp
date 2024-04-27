@@ -25,7 +25,9 @@ import ui.tabs.sources.SourcesContent
 @ExperimentalDecomposeApi
 @Composable
 fun TabsContent(
-    component: TabsComponent
+    component: TabsComponent,
+    useDarkTheme: Boolean,
+    onThemeChange: () -> Unit
 ) {
 
     val stack = component.tabsStack.subscribeAsState()
@@ -35,7 +37,9 @@ fun TabsContent(
         CenteredTopBar(
             title = state.value.title,
             showBack = state.value.showBack,
-            onBackClicked = { component.onBackClicked() }
+            useDarkTheme = useDarkTheme,
+            onThemeChangeClicked = { onThemeChange() },
+            onBackClicked = { component.onBackClicked() },
         )
     }, bottomBar = {
         BottomBar(

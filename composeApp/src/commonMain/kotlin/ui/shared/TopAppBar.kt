@@ -16,6 +16,8 @@ import isAndroid
 import kmpnewsapp.composeapp.generated.resources.Res
 import kmpnewsapp.composeapp.generated.resources.ic_arrow_back_24
 import kmpnewsapp.composeapp.generated.resources.ic_arrow_back_ios_24
+import kmpnewsapp.composeapp.generated.resources.ic_dark_mode_24
+import kmpnewsapp.composeapp.generated.resources.ic_light_mode_24
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.vectorResource
 
@@ -25,11 +27,14 @@ import org.jetbrains.compose.resources.vectorResource
 fun TopBar(
     title: String,
     showBack: Boolean,
-    onBackClicked: () -> Unit
+    useDarkTheme: Boolean,
+    onThemeChangeClicked: () -> Unit,
+    onBackClicked: (() -> Unit)? = null
 ) {
     TopAppBar(
         title = { TopBarTitle(title) },
         navigationIcon = { if (showBack) TopBarBackIcon(onBackClicked) },
+        actions = { TopBarThemeIcon(useDarkTheme, onThemeChangeClicked) },
         colors = TopBarColors()
     )
 }
@@ -40,11 +45,14 @@ fun TopBar(
 fun CenteredTopBar(
     title: String,
     showBack: Boolean,
-    onBackClicked: () -> Unit
+    useDarkTheme: Boolean,
+    onThemeChangeClicked: () -> Unit,
+    onBackClicked: (() -> Unit)? = null
 ) {
     CenterAlignedTopAppBar(
         title = { TopBarTitle(title) },
         navigationIcon = { if (showBack) TopBarBackIcon(onBackClicked) },
+        actions = { TopBarThemeIcon(useDarkTheme, onThemeChangeClicked) },
         colors = TopBarColors()
     )
 }
@@ -69,8 +77,8 @@ private fun TopBarColors() = TopAppBarDefaults.topAppBarColors().copy(
 @ExperimentalResourceApi
 @Composable
 private fun TopBarBackIcon(
-    onBackClicked: () -> Unit
-) = IconButton(onClick = { onBackClicked() }) {
+    onBackClicked: (() -> Unit)? = null
+) = IconButton(onClick = { if (onBackClicked != null) onBackClicked() }) {
     Icon(
         imageVector = vectorResource(
             if (getPlatform().isAndroid())
@@ -79,6 +87,25 @@ private fun TopBarBackIcon(
                 Res.drawable.ic_arrow_back_ios_24
         ),
         contentDescription = "back",
+        tint = MaterialTheme.colorScheme.onPrimary
+    )
+}
+
+@ExperimentalMaterial3Api
+@ExperimentalResourceApi
+@Composable
+private fun TopBarThemeIcon(
+    useDarkTheme: Boolean,
+    onThemeChangeClicked: () -> Unit
+) = IconButton(onClick = { onThemeChangeClicked() }) {
+    Icon(
+        imageVector = vectorResource(
+            if (useDarkTheme)
+                Res.drawable.ic_light_mode_24
+            else
+                Res.drawable.ic_dark_mode_24
+        ),
+        contentDescription = "change theme",
         tint = MaterialTheme.colorScheme.onPrimary
     )
 }
