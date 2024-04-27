@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,8 +29,9 @@ fun ArticleItem(
     onItemClicked: (Article) -> Unit
 ) {
     Card(
-        shape = RoundedCornerShape(15.dp),
-        modifier = modifier.padding(spacing_1x).fillMaxWidth()
+        modifier = modifier
+            .padding(spacing_1x)
+            .fillMaxWidth()
             .clickable {
                 onItemClicked(article)
             },

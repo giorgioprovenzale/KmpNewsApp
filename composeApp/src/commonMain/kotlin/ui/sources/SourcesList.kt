@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import domain.models.Source
 import theme.spacing_1x
 import theme.spacing_2x
@@ -48,10 +46,12 @@ fun SourceItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        shape = RoundedCornerShape(15.dp),
-        modifier = modifier.padding(spacing_1x).fillMaxWidth().clickable {
-            onItemClicked(source)
-        },
+        modifier = modifier
+            .padding(spacing_1x)
+            .fillMaxWidth()
+            .clickable {
+                onItemClicked(source)
+            },
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
