@@ -1,14 +1,24 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+NewsApp is an open-source mobile application developed using [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/).  
+NewsApp aims to provide a seamless news reading experience for both Android and iOS users. The app fetches news articles from various
+online  
+newspapers through the [NewsAPI.org](https://newsapi.org/) website.
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+## Setup
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+#### NewsApi API Key
 
+To run the application you need to supply an API key from  [NewsAPI.org](https://newsapi.org/). When you get the key please  
+add `secrets.properties` file inside `composeApp` folder.  
+Then put the API Key in the `secrets.properties`:
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+    API_KEY=<YOUR_API_KEY> 
+
+## Dependencies
+
+The project is based on [Kotlin Multiplatform Wizard](https://kmp.jetbrains.com/) and the following dependencies:
+
+- **[Decompose](https://arkivanov.github.io/Decompose/)  :** Lifecycle-aware business logic components, with routing functionality
+- **[Koin](https://insert-koin.io/docs/setup/koin)  :** Dependency injector
+- **[Coroutines](https://github.com/Kotlin/kotlinx.coroutines)  :** Asynchronous programming
+- **[Ktor](https://ktor.io/docs/welcome.html)  :** Type safe HTTP client
+- **[Kotlinx](https://github.com/Kotlin/kotlinx.serialization)  :** JSON serializer/deserializer
