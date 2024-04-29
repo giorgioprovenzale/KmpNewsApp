@@ -22,3 +22,4 @@ The project is based on [Kotlin Multiplatform Wizard](https://kmp.jetbrains.com/
 - **[Coroutines](https://github.com/Kotlin/kotlinx.coroutines)  :** Asynchronous programming
 - **[Ktor](https://ktor.io/docs/welcome.html)  :** Type safe HTTP client
 - **[Kotlinx](https://github.com/Kotlin/kotlinx.serialization)  :** JSON serializer/deserializer
+- 
