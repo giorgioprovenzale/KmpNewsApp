@@ -22,4 +22,19 @@ The project is based on [Kotlin Multiplatform Wizard](https://kmp.jetbrains.com/
 - **[Coroutines](https://github.com/Kotlin/kotlinx.coroutines)  :** Asynchronous programming
 - **[Ktor](https://ktor.io/docs/welcome.html)  :** Type safe HTTP client
 - **[Kotlinx](https://github.com/Kotlin/kotlinx.serialization)  :** JSON serializer/deserializer
-- 
+- **[Material3](https://m3.material.io/)  :** UI - Light and Dark
+
+## Video
+
+#### Android
+ 
+https://github.com/giorgioprovenzale/KmpNewsApp/assets/3489832/2b86d7ad-5ee5-4730-bad1-24711d0e1695
+  
+#### IOS
+
+
+https://github.com/giorgioprovenzale/KmpNewsApp/assets/3489832/474dbc43-5ba4-442b-a487-28d8b3af7c74
+
+## Contributing
+Feel free to fork and modify the code as you prefer on your side. PR are welcome here
+  
