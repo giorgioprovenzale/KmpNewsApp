@@ -1,5 +1,5 @@
 # NewsApp
-NewsApp is an open-source mobile application developed using [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/).  
+NewsApp is a sample mobile application developed using [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/).  
 NewsApp aims to provide a seamless news reading experience for both Android and iOS users. The app fetches news articles from various
 online  
 newspapers through the [NewsAPI.org](https://newsapi.org/) website.
