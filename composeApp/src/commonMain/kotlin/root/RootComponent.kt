@@ -26,7 +26,7 @@ class RootComponent(
         initialConfiguration = TabsToArticleConfig.TabsConfig,
         handleBackButton = true,
         childFactory = ::tabsToArticleChildFactory,
-        key = "tabsToArticle"
+        key = "tabsToArticles"
     )
 
     private fun tabsToArticleChildFactory(config: TabsToArticleConfig, componentContext: ComponentContext): TabsToArticleChild {
