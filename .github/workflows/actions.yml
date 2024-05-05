@@ -5,7 +5,7 @@ on:
 
 jobs:
   android-build-check:
-    name: Build android app and run shared tests.
+    name: Build android app
     runs-on: ubuntu-latest
 
     steps:
