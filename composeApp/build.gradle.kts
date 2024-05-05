@@ -72,9 +72,7 @@ kotlin {
 
             implementation(libs.decompose)
             implementation(libs.arkivanov.extensions.compose.jetbrains)
-            //decompose step1
 
-            //koin step1
             implementation(libs.koin.core)
 
             implementation(libs.napier)
@@ -82,7 +80,6 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
 
-            //koin step2
             implementation(libs.koin.android)
 
         }
