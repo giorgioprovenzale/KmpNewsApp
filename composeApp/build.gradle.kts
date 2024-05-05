@@ -109,7 +109,7 @@ buildkonfig {
         buildConfigField(
             Type.STRING,
             "API_KEY",
-            props["API_KEY"]?.toString()
+            props["API_KEY"]?.toString().orEmpty()
         )
     }
 }
