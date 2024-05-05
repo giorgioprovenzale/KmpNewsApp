@@ -95,8 +95,6 @@ kotlin {
 
 buildkonfig {
     packageName = "com.jpmobilelab.kmp.newsapp"
-    // objectName = "YourAwesomeConfig"
-    // exposeObjectWithName = "YourAwesomePublicConfig"
 
     val props = Properties()
 
