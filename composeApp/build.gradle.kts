@@ -48,7 +48,6 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
-            //decompose step3
             implementation(libs.decompose)
             implementation(libs.arkivanov.extensions.compose.jetbrains)
 
