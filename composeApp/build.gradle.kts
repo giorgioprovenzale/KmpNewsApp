@@ -48,9 +48,11 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
+            implementation(libs.koin.android)
+            implementation(libs.ktor.client.android)
+
             implementation(libs.decompose)
             implementation(libs.arkivanov.extensions.compose.jetbrains)
-
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -77,18 +79,11 @@ kotlin {
 
             implementation(libs.napier)
         }
-        androidMain.dependencies {
-            implementation(libs.ktor.client.android)
-
-            implementation(libs.koin.android)
-
-        }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
 
             api(libs.decompose)
             api(libs.lifecycle)
-
         }
     }
 }
